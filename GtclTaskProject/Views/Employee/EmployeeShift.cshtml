@@ -1,0 +1,237 @@
+﻿@model GtclTaskProject.Models.EmployeeShiftViewModel
+@{
+    ViewData["Title"] = "Employee Shift Management";
+    int currentPage = (int)ViewBag.CurrentPage;
+    int pageSize = (int)ViewBag.PageSize;
+    int totalCount = (int)ViewBag.TotalCount;
+    int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+    string searchString = ViewBag.SearchString ?? "";
+
+    // Calculate the current number of displayed rows
+    int startRecord = (currentPage - 1) * pageSize + 1;
+    int endRecord = Math.Min(startRecord + pageSize - 1, totalCount);
+    int displayedCount = Model.HrmAtdRosterScheduleEntry?.Count() ?? 0;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <style>
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+            .table-container thead th {
+                position: sticky;
+                top: 0;
+                background-color: #f8f9fa;
+                z-index: 1;
+            }
+    </style>
+}
+<div class="container-fluid">
+    <h1>@ViewData["Title"]</h1>
+    <div class="row">
+
+        <div class="col-md-8">
+
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Shift Assignment</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label for="fromDate" class="form-label">From Date</label>
+                            <input type="date" class="form-control" id="fromDate" name="fromDate">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="toDate" class="form-label">To Date</label>
+                            <input type="date" class="form-control" id="toDate" name="toDate">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="shift" class="form-label">Shift</label>
+                            <select class="form-select" id="shift" name="shift">
+                                <option value="">All Shifts</option>
+                                <option value="Morning">Morning</option>
+                                <option value="Evening">Evening</option>
+                                <option value="Night">Night</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="button" id="assignShifts" class="btn btn-primary me-2">Assign Shifts</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="mb-3">
+                        <label for="pageSizeSelect" class="form-label">Entries per page:</label>
+                        <select class="form-select" id="pageSizeSelect">
+                            <option value="5" selected="@(pageSize == 5)">5</option>
+                            <option value="10" selected="@(pageSize == 10)">10</option>
+                            <option value="25" selected="@(pageSize == 25)">25</option>
+                            <option value="50" selected="@(pageSize == 50)">50</option>
+                            <option value="100" selected="@(pageSize == 100)">100</option>
+                            @* <option value="@totalCount" selected="@(pageSize == totalCount)">All</option> *@
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchString" name="searchString" placeholder="Search..." value="@searchString" />
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="productTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>AI_ID</th>
+                                <th>RosterScheduleCode</th>
+                                <th>EmployeeID</th>
+                                <th>Date</th>
+                                <th>ShiftCode</th>
+                                <th>Remarks</th>
+                                <th>EntryDate</th>
+                                <th>ModifyDate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.HrmAtdRosterScheduleEntry)
+                            {
+                                <tr>
+                                    <td>@item.AiId</td>
+                                    <td>@item.RosterScheduleCode</td>
+                                    @* <td class="emp-id">@item.EmployeeId.ToString().PadLeft(8, '0')</td> *@
+                                    <td class="emp-id">@item.EmployeeId</td>
+                                    <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                                    <td>@item.ShiftCode</td>
+                                    <td>@item.Remarks</td>
+                                    <td>@(item.EntryDate.HasValue ? item.EntryDate.Value.ToString("yyyy-MM-dd") : "")</td>
+                                    <td>@(item.ModifyDate.HasValue ? item.ModifyDate.Value.ToString("yyyy-MM-dd") : "")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <div>
+                        <div class="alert alert-info mb-3 text-center">
+                            Showing @startRecord to @endRecord of @displayedCount rows out of @totalCount entries
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                @if (currentPage > 1)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="@Url.Action("EmployeeShift", "Employee", new { page = 1, pageSize = pageSize, searchString = searchString })">First</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="@Url.Action("EmployeeShift", "Employee", new { page = currentPage - 1, pageSize = pageSize, searchString = searchString })">Previous</a>
+                                    </li>
+                                }
+
+                                @for (int i = Math.Max(1, currentPage - 2); i <= Math.Min(totalPages, currentPage + 2); i++)
+                                {
+                                    <li class="page-item @(i == currentPage ? "active" : "")">
+                                        <a class="page-link" href="@Url.Action("EmployeeShift", "Employee", new { page = i, pageSize = pageSize, searchString = searchString })">@i</a>
+                                    </li>
+                                }
+
+                                @if (currentPage < totalPages)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="@Url.Action("EmployeeShift", "Employee", new { page = currentPage + 1, pageSize = pageSize, searchString = searchString })">Next</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="@Url.Action("EmployeeShift", "Employee", new { page = totalPages, pageSize = pageSize, searchString = searchString })">Last</a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>Select Employees for Shift:</h3>
+            <partial name="_EmployeeSelectionPartial" model="Model.Employees" />
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            console.log("Main view document ready");
+
+            // Update URL on pageSize change
+            $('#pageSizeSelect').on('change', function () {
+                var selectedPageSize = $(this).val();
+                var currentSearchString = $('#searchString').val();
+                window.location.href = '@Url.Action("EmployeeShift", "Employee", new { page = 1 })' + '&pageSize=' + selectedPageSize + '&searchString=' + currentSearchString;
+            });
+
+            // Auto search as you type with debounce
+            let searchTimeout;
+            $('#searchString').on('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(function() {
+                    var searchValue = $('#searchString').val();
+                    var selectedPageSize = $('#pageSizeSelect').val();
+                    window.location.href = '@Url.Action("EmployeeShift", "Employee", new { page = 1 })' + '&pageSize=' + selectedPageSize + '&searchString=' + searchValue;
+                }, 500); // 500ms delay to avoid too many requests
+            });
+
+            // Updated button ID and function name
+            $('#assignShifts').on('click', function (e) {
+                e.preventDefault();
+                var selectedEmployeeIds = [];
+                $('.employee-checkbox:checked').each(function () {
+                    selectedEmployeeIds.push(parseInt($(this).val())); // Parse as integer
+                });
+
+                // Gather the filter values
+                var fromDate = $('#fromDate').val();
+                var toDate = $('#toDate').val();
+                var shift = $('#shift').val();
+
+                // Create the data object to send as JSON
+                var data = {
+                    selectedEmployeeIds: selectedEmployeeIds,
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    shift: shift
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AssignShifts", "Employee")',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify(data),
+                    success: function (response) {
+                        // Handle success response
+                        console.log('Success:', response);
+                        alert("Shifts assigned successfully.");
+                        window.location.reload();
+                    },
+                    error: function (error) {
+                        // Handle error response
+                        console.error('Error:', error);
+                        alert("Employee Shifts assigned successfully.");
+                        window.location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+}

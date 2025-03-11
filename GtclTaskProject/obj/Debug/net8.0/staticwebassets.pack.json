@@ -1,0 +1,429 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\GtclTaskProject.bundle.scp.css",
+      "PackagePath": "staticwebassets\\GtclTaskProject.zwmb7uk6t0.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769649705734699.png",
+      "PackagePath": "staticwebassets\\Images\\638769649705734699.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769649974239864.png",
+      "PackagePath": "staticwebassets\\Images\\638769649974239864.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769653219943550.png",
+      "PackagePath": "staticwebassets\\Images\\638769653219943550.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769653510668282.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769653510668282.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769654035746872.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769654035746872.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769654204030227.png",
+      "PackagePath": "staticwebassets\\Images\\638769654204030227.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769654382027163.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769654382027163.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769697673834865.png",
+      "PackagePath": "staticwebassets\\Images\\638769697673834865.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769698532396455.png",
+      "PackagePath": "staticwebassets\\Images\\638769698532396455.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769704139685476.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769704139685476.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769736364369318.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769736364369318.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769739340475172.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769739340475172.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769751460394660.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769751460394660.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769792648990049.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769792648990049.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769793669020846.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769793669020846.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769794614675084.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769794614675084.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769810713089947.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769810713089947.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769813571279961.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769813571279961.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769989486008426.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769989486008426.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638769997329246660.jpg",
+      "PackagePath": "staticwebassets\\Images\\638769997329246660.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638770662281531210.png",
+      "PackagePath": "staticwebassets\\Images\\638770662281531210.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638770707625585714.png",
+      "PackagePath": "staticwebassets\\Images\\638770707625585714.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638770711607135210.jpg",
+      "PackagePath": "staticwebassets\\Images\\638770711607135210.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638770720734017714.png",
+      "PackagePath": "staticwebassets\\Images\\638770720734017714.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638770721470353368.png",
+      "PackagePath": "staticwebassets\\Images\\638770721470353368.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638770734260508565.png",
+      "PackagePath": "staticwebassets\\Images\\638770734260508565.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638770861826564391.jpg",
+      "PackagePath": "staticwebassets\\Images\\638770861826564391.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638770872036552891.png",
+      "PackagePath": "staticwebassets\\Images\\638770872036552891.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638770895819836117.jpg",
+      "PackagePath": "staticwebassets\\Images\\638770895819836117.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638770956000484902.png",
+      "PackagePath": "staticwebassets\\Images\\638770956000484902.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638771201425611262.png",
+      "PackagePath": "staticwebassets\\Images\\638771201425611262.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638771553235041319.jpg",
+      "PackagePath": "staticwebassets\\Images\\638771553235041319.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638771558450006318.jpg",
+      "PackagePath": "staticwebassets\\Images\\638771558450006318.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638771572299458263.jpg",
+      "PackagePath": "staticwebassets\\Images\\638771572299458263.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638771601075670688.png",
+      "PackagePath": "staticwebassets\\Images\\638771601075670688.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638771622332996487.png",
+      "PackagePath": "staticwebassets\\Images\\638771622332996487.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638771622719065326.jpg",
+      "PackagePath": "staticwebassets\\Images\\638771622719065326.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638772980710994244.png",
+      "PackagePath": "staticwebassets\\Images\\638772980710994244.png"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\Images\\638773101306438332.jpg",
+      "PackagePath": "staticwebassets\\Images\\638773101306438332.jpg"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\js\\table-export.js",
+      "PackagePath": "staticwebassets\\js\\table-export.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.GtclTaskProject.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.GtclTaskProject.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.GtclTaskProject.props",
+      "PackagePath": "build\\GtclTaskProject.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.GtclTaskProject.props",
+      "PackagePath": "buildMultiTargeting\\GtclTaskProject.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.GtclTaskProject.props",
+      "PackagePath": "buildTransitive\\GtclTaskProject.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<GtclTaskProject.Models.DeliveryAddress>
+
+@if (Model.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Delivery Address ID</th>
+                <th>Address Line</th>
+                <th>Contact Person</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var address in Model)
+            {
+                <tr>
+                    <td>@address.DeliveryAddressId</td>
+                    <td>@address.DeliveryAddressLine</td>
+                    <td>@address.ContactPerson</td>
+                    <td>@address.Phone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-danger">No delivery addresses found.</p>
+}

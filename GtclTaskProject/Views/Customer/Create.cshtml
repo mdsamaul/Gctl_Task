@@ -1,0 +1,204 @@
+﻿@model GtclTaskProject.Models.CustomerViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>Create</h1>
+
+<h4>Customer</h4>
+<hr />
+
+<div class="row" style="position: relative;">
+    <div class="col-md-10" >
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CustomerId" />
+            <div class="form-group">
+                <label asp-for="CustomerName" class="control-label"></label>
+                <input asp-for="CustomerName" class="form-control" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BusinessStart" class="control-label"></label>
+                <input asp-for="BusinessStart" class="form-control" type="date" />
+                <span asp-validation-for="BusinessStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerType" class="control-label"></label>
+                <select asp-for="CustomerType" class="form-control" asp-items="Html.GetEnumSelectList<CustomerType>()">
+                    <option value="">-- Select Customer Type --</option>
+                </select>
+                <span asp-validation-for="CustomerType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreditLimit" class="control-label"></label>
+                <input asp-for="CreditLimit" class="form-control" />
+                <span asp-validation-for="CreditLimit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhotoFile" class="control-label"></label>
+                <input type="file" asp-for="PhotoFile" id="photoFileInput" class="form-control" accept="image/*" />
+
+                <!-- Image Preview Section -->
+                @* <div id="imagePreview" class="mt-3 text-center d-flex justify-content-center" style="display:none; position: absolute; top: 0; right: 0; z-index: 10;">
+                    <img id="previewImage" src="" alt="Preview" class="img-fluid" style="max-height: 200px;" />
+
+                    <!-- Remove button positioned on top of the image -->
+                    <button type="button" class="btn btn-danger mt-2 text-center" id="removeImageBtn"
+                            style="position: absolute; bottom:0; z-index: 20;">
+                        Remove Image
+                    </button>
+                </div> *@
+                <div id="imagePreview" class="image-preview-container mt-3 text-center d-flex justify-content-center" style="display:none; position: absolute; top: 0; right: 0; z-index: 10;">
+              
+                    <div class="preview-wrapper">
+                        <img id="previewImage" src="" alt="Preview" class="preview-image" />
+                        <button type="button" id="removeImageBtn" class="remove-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                            Remove
+                        </button>
+                    </div>
+                </div>
+
+
+                <span asp-validation-for="PhotoFile" class="text-danger"></span>
+            </div>
+
+            <div class="my-2">
+                <div>
+                    <h4>Delivery Address</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Delivery Address</th>
+                                <th>Contact Person</th>
+                                <th>Phone</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="con" id="deliveryAddressContainer">
+                            <tr class="rc">
+                                <td>
+                                    <div class="form-group">
+                                        <input name="DeliveryAddresses[0].DeliveryAddressLine" class="form-control" />
+                                        <span class="text-danger" data-valmsg-for="DeliveryAddresses[0].DeliveryAddressLine"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input name="DeliveryAddresses[0].ContactPerson" class="form-control" />
+                                        <span class="text-danger" data-valmsg-for="DeliveryAddresses[0].ContactPerson"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input name="DeliveryAddresses[0].Phone" class="form-control" />
+                                        <span class="text-danger" data-valmsg-for="DeliveryAddresses[0].Phone"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary addmore">AddMore</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-sm btn-info">Back to List</a>
+</div>
+
+    @* @await Html.RenderPartialAsync("_ValidationScriptsPartial") *@
+@section Scripts {
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            let rowCount = 0;
+            $(document).on('click', '.addmore', function() {
+                rowCount++;
+                var newRow = `
+                    <tr class="rc">
+                        <td>
+                            <div class="form-group">
+                                <input name="DeliveryAddresses[${rowCount}].DeliveryAddressLine" class="form-control" />
+                                <span class="text-danger" data-valmsg-for="DeliveryAddresses[${rowCount}].DeliveryAddressLine"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <input name="DeliveryAddresses[${rowCount}].ContactPerson" class="form-control" />
+                                <span class="text-danger" data-valmsg-for="DeliveryAddresses[${rowCount}].ContactPerson"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <input name="DeliveryAddresses[${rowCount}].Phone" class="form-control" />
+                                <span class="text-danger" data-valmsg-for="DeliveryAddresses[${rowCount}].Phone"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger removeRow">Remove</button>
+                        </td>
+                    </tr>
+                `;
+                $("#deliveryAddressContainer").append(newRow);
+            });
+
+            // Remove row
+            $(document).on('click', '.removeRow', function() {
+                $(this).closest('tr').remove();
+            });
+
+            // Image preview and remove functionality
+            $('#photoFileInput').change(function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        // Show the preview and set the image source
+                        $('#imagePreview').show();
+                        $('#previewImage').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Remove image preview and reset input
+            $('#removeImageBtn').click(function() {
+                $('#photoFileInput').val(''); // Clear the file input
+                $('#imagePreview').hide(); // Hide the preview
+                $('#previewImage').attr('src', ''); // Clear the image source
+            });
+        });
+    </script>
+}
