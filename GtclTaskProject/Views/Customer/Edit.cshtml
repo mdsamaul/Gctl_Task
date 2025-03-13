@@ -32,9 +32,18 @@
                 <span asp-validation-for="BusinessStart" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="CustomerType" class="control-label"></label>
-                <input asp-for="CustomerType" class="form-control" />
+            @* <div class="form-group"> *@
+            @*     <label asp-for="CustomerTypeName" class="control-label"></label> *@
+            @*     <select asp-items="CustomerTypeName" > *@
+
+            @*    </select> *@
+            @*     <span asp-validation-for="CustomerTypeName" class="text-danger"></span> *@
+            @* </div> *@
+            <div class="form-group flex-grow-1">
+                <label asp-for="CustomerTypeName" class="control-label"></label>
+                <select asp-for="CustomerType" class="form-control" asp-items="ViewBag.CustomerType" id="CustomerType">
+                    <option value="CustomerType">-- @Model.CustomerTypeName --</option>
+                </select>
                 <span asp-validation-for="CustomerType" class="text-danger"></span>
             </div>
 

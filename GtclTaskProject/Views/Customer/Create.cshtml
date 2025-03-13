@@ -1,5 +1,7 @@
 ﻿@model GtclTaskProject.Models.CustomerViewModel
 
+
+
 @{
     ViewData["Title"] = "Create";
 }
@@ -30,13 +32,24 @@
                 <input asp-for="BusinessStart" class="form-control" type="date" />
                 <span asp-validation-for="BusinessStart" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CustomerType" class="control-label"></label>
-                <select asp-for="CustomerType" class="form-control" asp-items="Html.GetEnumSelectList<CustomerType>()">
-                    <option value="">-- Select Customer Type --</option>
-                </select>
-                <span asp-validation-for="CustomerType" class="text-danger"></span>
+            <div class="d-flex align-items-center gap-2">              
+                <div class="form-group flex-grow-1">
+                    <label asp-for="CustomerType" class="control-label"></label>
+                    <select asp-for="CustomerType" class="form-control" asp-items="ViewBag.CustomerType" id="CustomerType">
+                        <option value="">-- Select Customer Type --</option>
+                    </select>
+                    <span asp-validation-for="CustomerType" class="text-danger"></span>
+                </div>
+
+                <div>                 
+                    <p></p>
+                    <button type="button" class="btn btn-primary d-flex align-items-center justify-content-center rounded-circle shadow"
+                            style="width: 40px; height: 40px;" id="showCustomerTypeModal">
+                        <i class="fas fa-plus"></i>
+                    </button>
+              </div>
             </div>
+
             <div class="form-group">
                 <label asp-for="Phone" class="control-label"></label>
                 <input asp-for="Phone" class="form-control" />
@@ -55,19 +68,7 @@
             <div class="form-group">
                 <label asp-for="PhotoFile" class="control-label"></label>
                 <input type="file" asp-for="PhotoFile" id="photoFileInput" class="form-control" accept="image/*" />
-
-                <!-- Image Preview Section -->
-                @* <div id="imagePreview" class="mt-3 text-center d-flex justify-content-center" style="display:none; position: absolute; top: 0; right: 0; z-index: 10;">
-                    <img id="previewImage" src="" alt="Preview" class="img-fluid" style="max-height: 200px;" />
-
-                    <!-- Remove button positioned on top of the image -->
-                    <button type="button" class="btn btn-danger mt-2 text-center" id="removeImageBtn"
-                            style="position: absolute; bottom:0; z-index: 20;">
-                        Remove Image
-                    </button>
-                </div> *@
                 <div id="imagePreview" class="image-preview-container mt-3 text-center d-flex justify-content-center" style="display:none; position: absolute; top: 0; right: 0; z-index: 10;">
-              
                     <div class="preview-wrapper">
                         <img id="previewImage" src="" alt="Preview" class="preview-image" />
                         <button type="button" id="removeImageBtn" class="remove-button">
@@ -79,11 +80,8 @@
                         </button>
                     </div>
                 </div>
-
-
                 <span asp-validation-for="PhotoFile" class="text-danger"></span>
             </div>
-
             <div class="my-2">
                 <div>
                     <h4>Delivery Address</h4>
@@ -135,8 +133,7 @@
 <div>
     <a asp-action="Index" class="btn btn-sm btn-info">Back to List</a>
 </div>
-
-    @* @await Html.RenderPartialAsync("_ValidationScriptsPartial") *@
+  
 @section Scripts {
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -193,11 +190,93 @@
                 }
             });
 
-            // Remove image preview and reset input
             $('#removeImageBtn').click(function() {
-                $('#photoFileInput').val(''); // Clear the file input
-                $('#imagePreview').hide(); // Hide the preview
-                $('#previewImage').attr('src', ''); // Clear the image source
+                $('#photoFileInput').val(''); 
+                $('#imagePreview').hide(); 
+                $('#previewImage').attr('src', '');
+            });
+        });           
+        
+
+           $(document).ready(function() {          
+            $("#showCustomerTypeModal").click(function() {
+                $.ajax({
+                    url: '@Url.Action("GetCustomerTypePartial", "Customer")',
+                    type: 'GET',
+                    success: function(response) {
+                        console.log(response.customerType);
+                        if($("#customerTypeModal").length === 0) {
+                            $("body").append(response);
+                        }
+                        $("#customerTypeModal").modal("show");
+                    }
+                });
+            });
+            $(document).on("submit", "#customerTypeForm", function(e) {
+                e.preventDefault(); 
+                var customerTypeName = $("#CustomerTypeName").val();
+                $.ajax({
+                    url: '@Url.Action("AddCustomerType", "Customer")',
+                    type: 'POST',
+                    data: {
+                        CustomerTypeName: customerTypeName
+                    },
+                    success: function(response) {
+                        if(response.success) {
+                            $('#customerTypeModal').modal('hide');
+                            var newItem = $('<li>').text(response.customerType.customerType1);
+                            $('#customerTypeList').prepend(newItem);
+                            var currentOptions = [];
+                            $("#CustomerType option").each(function() {
+                                if($(this).val() !== "") {
+                                    currentOptions.push({
+                                        value: $(this).val(),
+                                        text: $(this).text()
+                                    });
+                                }
+                            });                          
+
+                                    // Clear the dropdown
+        $("#CustomerType").empty();
+
+        // Add the new customer type as the first option (selected by default)
+        var newOption = $('<option></option>')
+            .attr('value', response.customerType.Id)
+            .text(response.customerType.customerType1)
+            .attr('selected', 'selected');
+            console.log({newOption});
+        // Check if the customerTypeId is not null or undefined before appending
+        if (response.customerType.customerTypeId) {
+            $("#CustomerType").append(newOption);
+        } else {
+            console.log("Customer Type ID is null or undefined.");
+        }
+
+        // Add all previously existing options (except the placeholder)
+        $.each(currentOptions, function(index, item) {
+            // Skip the newly added one if it somehow exists already
+            if (item.value !== response.customerType.customerTypeId) {
+                var option = $('<option></option>')
+                    .attr('value', item.value)
+                    .text(item.text);
+                $("#CustomerType").append(option);
+            }
+        });
+
+        // Clear the input field and hide warning
+        $("#CustomerTypeName").val('');
+        $("#warningMessage").hide();
+
+
+                        } else {
+                            // Show warning message if the customer type already exists
+                            $("#warningMessage").text(response.message).show();
+                        }
+                    },
+                    error: function() {
+                        alert("Error adding customer type.");
+                    }
+                });
             });
         });
     </script>

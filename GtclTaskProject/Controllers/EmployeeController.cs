@@ -58,7 +58,67 @@ namespace GtclTaskProject.Controllers
             return RedirectToAction("Index");
         }
 
-       
+
+        //public async Task<IActionResult> EmployeeShift(string searchString, int page = 1, int pageSize = 5)
+        //{
+        //    GctlinfoExamTest2025Context _db = new GctlinfoExamTest2025Context();
+        //    int skip = (page - 1) * pageSize;
+        //    var rosterEntriesQuery = _db.HrmAtdRosterScheduleEntries.AsQueryable();
+
+        //    // Apply search filter
+        //    if (!string.IsNullOrEmpty(searchString))
+        //    {
+        //        bool isDate = DateTime.TryParseExact(searchString, "yyyy-MM-dd",
+        //                        CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime searchDate);
+
+        //        bool isInt = int.TryParse(searchString, out int searchInt);
+
+        //        rosterEntriesQuery = rosterEntriesQuery.Where(e =>
+        //            (e.EmployeeId != null && e.EmployeeId.Contains(searchString)) ||
+        //            (e.RosterScheduleCode != null && e.RosterScheduleCode.Contains(searchString)) ||
+        //            (isInt && e.ShiftCode == searchInt) ||
+        //            (e.Remarks != null && e.Remarks.Contains(searchString)) ||
+        //            (isDate && e.Date != null && e.Date.Date == searchDate.Date));
+        //    }
+
+        //    // Get Total number of items from database
+        //    var totalCount = await rosterEntriesQuery.CountAsync();
+
+        //    // Get Paginated Data
+        //    var rosterEntries = await rosterEntriesQuery
+        //        .Skip(skip)
+        //        .Take(pageSize)
+        //        .ToListAsync();
+
+        //    var employees = await _db.HrmEmployees
+        //        .Select(emp => new HrmEmployeeViewModel
+        //        {
+        //            AI_ID = emp.AiId,
+        //            EmployeeID = emp.EmployeeId,
+        //            Name = emp.Name,
+        //            DesignationCode = emp.DesignationCode
+        //        })
+        //        .ToListAsync();
+
+        //    // Create the ViewModel and assign the data
+        //    var viewModel = new EmployeeShiftViewModel
+        //    {
+        //        Employees = employees,
+        //        HrmAtdRosterScheduleEntry = rosterEntries
+        //    };
+
+        //    Console.WriteLine($"Current Page: {page}, Page Size: {pageSize}, Total Count: {totalCount}");
+
+        //    ViewBag.SearchString = searchString;
+        //    ViewBag.CurrentPage = page;
+        //    ViewBag.PageSize = pageSize;
+        //    ViewBag.TotalCount = totalCount;
+
+        //    return View(viewModel);
+        //}
+
+
+        // Original method for full page load
         public async Task<IActionResult> EmployeeShift(string searchString, int page = 1, int pageSize = 5)
         {
             GctlinfoExamTest2025Context _db = new GctlinfoExamTest2025Context();
@@ -70,9 +130,7 @@ namespace GtclTaskProject.Controllers
             {
                 bool isDate = DateTime.TryParseExact(searchString, "yyyy-MM-dd",
                                 CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime searchDate);
-
                 bool isInt = int.TryParse(searchString, out int searchInt);
-
                 rosterEntriesQuery = rosterEntriesQuery.Where(e =>
                     (e.EmployeeId != null && e.EmployeeId.Contains(searchString)) ||
                     (e.RosterScheduleCode != null && e.RosterScheduleCode.Contains(searchString)) ||
@@ -107,15 +165,74 @@ namespace GtclTaskProject.Controllers
                 HrmAtdRosterScheduleEntry = rosterEntries
             };
 
-            Console.WriteLine($"Current Page: {page}, Page Size: {pageSize}, Total Count: {totalCount}");
+            // Calculate pagination details
+            int startRecord = (page - 1) * pageSize + 1;
+            int endRecord = Math.Min(startRecord + pageSize - 1, totalCount);
+            int displayedCount = rosterEntries.Count;
 
             ViewBag.SearchString = searchString;
             ViewBag.CurrentPage = page;
             ViewBag.PageSize = pageSize;
             ViewBag.TotalCount = totalCount;
+            ViewBag.StartRecord = startRecord;
+            ViewBag.EndRecord = endRecord;
+            ViewBag.DisplayedCount = displayedCount;
 
             return View(viewModel);
         }
+
+        // New method for AJAX table refresh
+        public async Task<IActionResult> GetShiftTableData(string searchString, int page = 1, int pageSize = 5)
+        {
+            GctlinfoExamTest2025Context _db = new GctlinfoExamTest2025Context();
+            int skip = (page - 1) * pageSize;
+            var rosterEntriesQuery = _db.HrmAtdRosterScheduleEntries.AsQueryable();
+
+            // Apply search filter
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                bool isDate = DateTime.TryParseExact(searchString, "yyyy-MM-dd",
+                                CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime searchDate);
+                bool isInt = int.TryParse(searchString, out int searchInt);
+                rosterEntriesQuery = rosterEntriesQuery.Where(e =>
+                    (e.EmployeeId != null && e.EmployeeId.Contains(searchString)) ||
+                    (e.RosterScheduleCode != null && e.RosterScheduleCode.Contains(searchString)) ||
+                    (isInt && e.ShiftCode == searchInt) ||
+                    (e.Remarks != null && e.Remarks.Contains(searchString)) ||
+                    (isDate && e.Date != null && e.Date.Date == searchDate.Date));
+            }
+
+            // Get Total number of items from database
+            var totalCount = await rosterEntriesQuery.CountAsync();
+
+            // Get Paginated Data
+            var rosterEntries = await rosterEntriesQuery
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+
+            // Create the ViewModel and assign the data
+            var viewModel = new EmployeeShiftViewModel
+            {
+                HrmAtdRosterScheduleEntry = rosterEntries
+            };
+
+            // Calculate pagination details
+            int startRecord = (page - 1) * pageSize + 1;
+            int endRecord = Math.Min(startRecord + pageSize - 1, totalCount);
+            int displayedCount = rosterEntries.Count;
+
+            ViewBag.SearchString = searchString;
+            ViewBag.CurrentPage = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalCount = totalCount;
+            ViewBag.StartRecord = startRecord;
+            ViewBag.EndRecord = endRecord;
+            ViewBag.DisplayedCount = displayedCount;
+
+            return PartialView("_ShiftTablePartial", viewModel);
+        }
+
 
         [HttpPost]
         public IActionResult AssignShifts([FromBody] ShiftAssignmentData data)
@@ -158,14 +275,14 @@ namespace GtclTaskProject.Controllers
                         for (int i = 0; i < numberOfDays; i++)
                         {
                             DateTime shiftDate = fromDate.AddDays(i);
-                        var employeeShift = new HrmAtdRosterScheduleEntry
+                            var employeeShift = new HrmAtdRosterScheduleEntry
                             {
                                 RosterScheduleCode = "RS-2024-07-26-001",
-                            //EmployeeId = employeeId.ToString(),
-                            EmployeeId = employeeId.ToString("D8"),
-                            Date = shiftDate,
-                                ShiftCode = 1, 
-                                Remarks = data.shift, 
+                                //EmployeeId = employeeId.ToString(),
+                                EmployeeId = employeeId.ToString("D8"),
+                                Date = shiftDate,
+                                ShiftCode = 1,
+                                Remarks = data.shift,
                                 EntryDate = DateTime.Now,
                                 ModifyDate = DateTime.Now
                             };
@@ -211,7 +328,7 @@ namespace GtclTaskProject.Controllers
                 return Json(rosterData);
             }
             catch (Exception ex)
-            {                
+            {
                 return StatusCode(500, new { error = ex.Message });
             }
         }

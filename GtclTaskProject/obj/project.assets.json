@@ -12193,11 +12193,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\GtclTaskProject.csproj",
+      "projectUniqueName": "D:\\gctl infosys\\update\\Gctl_Task\\GtclTaskProject\\GtclTaskProject.csproj",
       "projectName": "GtclTaskProject",
-      "projectPath": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\GtclTaskProject.csproj",
+      "projectPath": "D:\\gctl infosys\\update\\Gctl_Task\\GtclTaskProject\\GtclTaskProject.csproj",
       "packagesPath": "C:\\Users\\mdsam\\.nuget\\packages\\",
-      "outputPath": "D:\\gctl infosys\\final\\GtclTaskProject\\GtclTaskProject\\obj\\",
+      "outputPath": "D:\\gctl infosys\\update\\Gctl_Task\\GtclTaskProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

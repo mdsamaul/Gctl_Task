@@ -1,4 +1,6 @@
-﻿@model IEnumerable<GtclTaskProject.Models.Customer>
+﻿@* @model IEnumerable<GtclTaskProject.Models.Customer> *@
+@model IEnumerable<CustomerViewModel>
+
 
 @{
     ViewData["Title"] = "Customers";
@@ -56,13 +58,17 @@
                         @Html.DisplayFor(modelItem => item.Address)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.BusinessStart)
+                        @* @Html.DisplayFor(modelItem => item.BusinessStart?.ToString("yyyy-MM-dd")) *@
+                    @(item.BusinessStart?.ToString("yyyy-MM-dd"))
+
+                    @* <td>@Model.BusinessStart?.ToString("yyyy-MM-dd")</td> *@
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CustomerType)
+                        @Html.DisplayFor(modelItem => item.CustomerTypeName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CreditLimit)
+                        @Html.DisplayFor(modelItem => item.CreditLimit)                      
+
                     </td>
                     <td>
                        <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-sm btn-warning">

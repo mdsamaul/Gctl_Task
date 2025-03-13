@@ -20,6 +20,7 @@
         .table-container {
             max-height: 500px;
             overflow-y: auto;
+            position: relative; /* Essential for absolute positioning of the loader */
         }
 
             .table-container thead th {
@@ -28,6 +29,26 @@
                 background-color: #f8f9fa;
                 z-index: 1;
             }
+
+        /* Improved loader styling */
+        .table-loader {
+            position: absolute; /* Now relative to the table-container */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none; /* Initially hidden */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            background-color: rgba(255, 255, 255, 0.8); /* Optional: Semi-transparent background */
+            z-index: 1000; /* Make sure it's above the table content */
+        }
+
+        /* Add animation to the spinner for better visual feedback */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
     </style>
 }
 <div class="container-fluid">
@@ -35,8 +56,6 @@
     <div class="row">
 
         <div class="col-md-8">
-
-
             <div class="card mb-4">
                 <div class="card-header">
                     <h5>Shift Assignment</h5>
@@ -76,7 +95,6 @@
                             <option value="25" selected="@(pageSize == 25)">25</option>
                             <option value="50" selected="@(pageSize == 50)">50</option>
                             <option value="100" selected="@(pageSize == 100)">100</option>
-                            @* <option value="@totalCount" selected="@(pageSize == totalCount)">All</option> *@
                         </select>
                     </div>
                     <div class="mb-3">
@@ -85,77 +103,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="table-container">
-                    <table id="productTable" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>AI_ID</th>
-                                <th>RosterScheduleCode</th>
-                                <th>EmployeeID</th>
-                                <th>Date</th>
-                                <th>ShiftCode</th>
-                                <th>Remarks</th>
-                                <th>EntryDate</th>
-                                <th>ModifyDate</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.HrmAtdRosterScheduleEntry)
-                            {
-                                <tr>
-                                    <td>@item.AiId</td>
-                                    <td>@item.RosterScheduleCode</td>
-                                    @* <td class="emp-id">@item.EmployeeId.ToString().PadLeft(8, '0')</td> *@
-                                    <td class="emp-id">@item.EmployeeId</td>
-                                    <td>@item.Date.ToString("yyyy-MM-dd")</td>
-                                    <td>@item.ShiftCode</td>
-                                    <td>@item.Remarks</td>
-                                    <td>@(item.EntryDate.HasValue ? item.EntryDate.Value.ToString("yyyy-MM-dd") : "")</td>
-                                    <td>@(item.ModifyDate.HasValue ? item.ModifyDate.Value.ToString("yyyy-MM-dd") : "")</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div>
-                    <div>
-                        <div class="alert alert-info mb-3 text-center">
-                            Showing @startRecord to @endRecord of @displayedCount rows out of @totalCount entries
+
+                <!-- Table data container with ID for AJAX updates -->
+                <div id="tableDataContainer" class="table-container">
+                    <!-- Loader overlay -->
+                    <div id="tableLoader" class="table-loader">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
-
                     </div>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                @if (currentPage > 1)
-                                {
-                                    <li class="page-item">
-                                        <a class="page-link" href="@Url.Action("EmployeeShift", "Employee", new { page = 1, pageSize = pageSize, searchString = searchString })">First</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="@Url.Action("EmployeeShift", "Employee", new { page = currentPage - 1, pageSize = pageSize, searchString = searchString })">Previous</a>
-                                    </li>
-                                }
 
-                                @for (int i = Math.Max(1, currentPage - 2); i <= Math.Min(totalPages, currentPage + 2); i++)
-                                {
-                                    <li class="page-item @(i == currentPage ? "active" : "")">
-                                        <a class="page-link" href="@Url.Action("EmployeeShift", "Employee", new { page = i, pageSize = pageSize, searchString = searchString })">@i</a>
-                                    </li>
-                                }
-
-                                @if (currentPage < totalPages)
-                                {
-                                    <li class="page-item">
-                                        <a class="page-link" href="@Url.Action("EmployeeShift", "Employee", new { page = currentPage + 1, pageSize = pageSize, searchString = searchString })">Next</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="@Url.Action("EmployeeShift", "Employee", new { page = totalPages, pageSize = pageSize, searchString = searchString })">Last</a>
-                                    </li>
-                                }
-                            </ul>
-                        </nav>
-                    </div>
+                    <partial name="_ShiftTablePartial" model="Model" />
                 </div>
             </div>
         </div>
@@ -165,7 +123,9 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -173,25 +133,84 @@
         $(document).ready(function () {
             console.log("Main view document ready");
 
-            // Update URL on pageSize change
+            // Show loader function
+            function showLoader() {
+                $('#tableLoader').show();  // Use .show() instead of .fadeIn()
+            }
+
+            // Hide loader function
+            function hideLoader() {
+                $('#tableLoader').hide();   // Use .hide() instead of .fadeOut()
+            }
+
+            // Function to load table data via AJAX
+            function loadTableData(page, pageSize, searchString) {
+                // Show loader before AJAX request
+                showLoader();
+
+                $.ajax({
+                    url: '@Url.Action("GetShiftTableData", "Employee")',
+                    type: 'GET',
+                    data: {
+                        page: page,
+                        pageSize: pageSize,
+                        searchString: searchString
+                    },
+                    success: function (result) {
+                        $('#tableDataContainer').html(result);
+                        // Re-attach event handlers for pagination links
+                        attachPaginationHandlers();
+                        // Hide loader
+                        hideLoader();
+                    },
+                    error: function (error) {
+                        console.error('Error loading table data:', error);
+                        // Hide loader even on error
+                        hideLoader();
+                        // Show error message
+                        $('#tableDataContainer').html('<div class="alert alert-danger">Error loading data. Please try again.</div>');
+                    }
+                });
+            }
+
+            // Function to attach click handlers to pagination links
+            function attachPaginationHandlers() {
+                $('.page-nav-link').on('click', function (e) {
+                    e.preventDefault();
+                    var page = $(this).data('page');
+                    var pageSize = $('#pageSizeSelect').val();
+                    var searchString = $('#searchString').val();
+                    loadTableData(page, pageSize, searchString);
+                });
+            }
+
+            // Initial attachment of pagination handlers
+            attachPaginationHandlers();
+
+            // Update table data on pageSize change
             $('#pageSizeSelect').on('change', function () {
                 var selectedPageSize = $(this).val();
                 var currentSearchString = $('#searchString').val();
-                window.location.href = '@Url.Action("EmployeeShift", "Employee", new { page = 1 })' + '&pageSize=' + selectedPageSize + '&searchString=' + currentSearchString;
+                // Show loader immediately when user changes page size
+                showLoader();
+                loadTableData(1, selectedPageSize, currentSearchString);
             });
 
             // Auto search as you type with debounce
             let searchTimeout;
             $('#searchString').on('input', function() {
+                // Show loader as soon as user starts typing
+                showLoader();
+
                 clearTimeout(searchTimeout);
                 searchTimeout = setTimeout(function() {
                     var searchValue = $('#searchString').val();
                     var selectedPageSize = $('#pageSizeSelect').val();
-                    window.location.href = '@Url.Action("EmployeeShift", "Employee", new { page = 1 })' + '&pageSize=' + selectedPageSize + '&searchString=' + searchValue;
+                    loadTableData(1, selectedPageSize, searchValue);
                 }, 500); // 500ms delay to avoid too many requests
             });
 
-            // Updated button ID and function name
+            // Assign shifts button click handler
             $('#assignShifts').on('click', function (e) {
                 e.preventDefault();
                 var selectedEmployeeIds = [];
@@ -212,6 +231,9 @@
                     shift: shift
                 };
 
+                // Show loader
+                showLoader();
+
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("AssignShifts", "Employee")',
@@ -222,13 +244,19 @@
                         // Handle success response
                         console.log('Success:', response);
                         alert("Shifts assigned successfully.");
-                        window.location.reload();
+                        // Reload just the table data instead of the full page
+                        var selectedPageSize = $('#pageSizeSelect').val();
+                        var currentSearchString = $('#searchString').val();
+                        loadTableData(1, selectedPageSize, currentSearchString);
                     },
                     error: function (error) {
                         // Handle error response
                         console.error('Error:', error);
                         alert("Employee Shifts assigned successfully.");
-                        window.location.reload();
+                        // Reload just the table data instead of the full page
+                        var selectedPageSize = $('#pageSizeSelect').val();
+                        var currentSearchString = $('#searchString').val();
+                        loadTableData(1, selectedPageSize, currentSearchString);
                     }
                 });
             });

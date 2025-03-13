@@ -19,7 +19,8 @@ namespace GtclTaskProject.Models
         public DateTime? BusinessStart { get; set; }
 
         [Display(Name = "Customer Type")] 
-        public CustomerType? CustomerType { get; set; }
+        public int? CustomerType { get; set; }
+        public string? CustomerTypeName { get; set; }
 
         [Required(ErrorMessage = "Phone is required")]
         [Phone(ErrorMessage = "Invalid Phone Number")] 
@@ -45,7 +46,7 @@ namespace GtclTaskProject.Models
 
         //public virtual List<DeliveryAddress>? DeliveryAddresses { get; set; }
         public List<DeliveryAddressViewModel> DeliveryAddresses { get; set; }
-                
+           
     }
     
 }

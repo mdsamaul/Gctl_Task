@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GtclTaskProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bef62ba8fbe91d610d2fbfb4d8264918357c29bb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c25eca787b105543220e6f06623d3175c7a4247")]
 [assembly: System.Reflection.AssemblyProductAttribute("GtclTaskProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GtclTaskProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

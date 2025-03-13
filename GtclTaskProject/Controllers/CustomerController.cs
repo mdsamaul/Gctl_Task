@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NPOI.OpenXmlFormats.Dml.Chart;
 
 namespace GtclTaskProject.Controllers
 {
@@ -17,13 +18,37 @@ namespace GtclTaskProject.Controllers
         public async Task<IActionResult> Index()
         {
             GctlinfoExamTest2025Context _db = new GctlinfoExamTest2025Context();
-            var customer = _db.Customers.OrderByDescending(c => c.CustomerId).ToList();
-            return View(customer);
+
+           
+            var customers = from c in _db.Customers
+                            join ct in _db.CustomerTypes on c.CustomerType equals ct.Id
+                            select new CustomerViewModel
+                            {
+                                CustomerId = c.CustomerId,
+                                CustomerName = c.CustomerName,
+                                Address = c.Address,
+                                BusinessStart = c.BusinessStart,
+                                CustomerType = c.CustomerType,
+                                CustomerTypeName = ct.CustomerType1, 
+                                Phone = c.Phone,
+                                Email = c.Email,
+                                CreditLimit = c.CreditLimit,
+                                Photo = c.Photo,                                
+                            };
+
+            return View(customers.ToList());
+
+
+
+
+            //return View(cs.ToList());
         }
 
         public IActionResult Create()
         {
+            GctlinfoExamTest2025Context _db = new GctlinfoExamTest2025Context();
             var viewModel = new CustomerViewModel();
+            ViewBag.CustomerType = new SelectList(_db.CustomerTypes, "Id", "CustomerType1");
             return View();
         }
 
@@ -40,6 +65,7 @@ namespace GtclTaskProject.Controllers
             if (exists)
             {
                 ModelState.AddModelError("", "A customer with this name and address already exists.");
+                ViewBag.CustomerType = new SelectList(_db.CustomerTypes, "Id", "CustomerType1");
                 return View(viewModel);
             }
 
@@ -90,14 +116,14 @@ namespace GtclTaskProject.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
+            ViewBag.CustomerType = new SelectList(_db.CustomerTypes, "Id", "CustomerType1");
             return View(viewModel);
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
             GctlinfoExamTest2025Context _db = new GctlinfoExamTest2025Context();
-
+            ViewBag.CustomerType = new SelectList(_db.CustomerTypes, "Id", "CustomerType1");
             if (id == null)
             {
                 return NotFound();
@@ -112,7 +138,7 @@ namespace GtclTaskProject.Controllers
 
             // Fetch delivery addresses based on the customer ID
             var deliveryAddresses = await _db.DeliveryAddresses.Where(c => c.CustomerId == customer.CustomerId).ToListAsync();
-
+            var customerType = await _db.CustomerTypes.FindAsync(customer.CustomerType);
             // Create the ViewModel and pass the data, including DeliveryAddresses
             var viewModel = new CustomerViewModel
             {
@@ -120,7 +146,7 @@ namespace GtclTaskProject.Controllers
                 CustomerName = customer.CustomerName,
                 Address = customer.Address,
                 BusinessStart = customer.BusinessStart,
-                CustomerType = customer.CustomerType,
+                CustomerTypeName = customerType.CustomerType1,
                 Phone = customer.Phone,
                 Email = customer.Email,
                 CreditLimit = customer.CreditLimit,
@@ -278,5 +304,37 @@ namespace GtclTaskProject.Controllers
         {
             return PartialView("_addDeliveryAddress");
         }
+        public IActionResult GetCustomerTypePartial()
+        {
+            GctlinfoExamTest2025Context _db = new GctlinfoExamTest2025Context();
+            var customerTypes = _db.CustomerTypes.ToList(); // List<CustomerType> তে data নেওয়া
+            return PartialView("_GetCustomerTypePartial", customerTypes); // PartialView এ পাঠানো
+        }
+
+        [HttpPost]
+        public IActionResult AddCustomerType(string CustomerTypeName)
+        {
+            GctlinfoExamTest2025Context _db = new GctlinfoExamTest2025Context();
+
+            if (!string.IsNullOrEmpty(CustomerTypeName))
+            {
+                var exCustomer = _db.CustomerTypes.Any(c => c.CustomerType1 == CustomerTypeName);
+                if (exCustomer)
+                {
+                    return Json(new { success = false, message = "Customer type already exists" });
+                }
+
+                var customerType = new CustomerType { CustomerType1 = CustomerTypeName };
+                _db.CustomerTypes.Add(customerType);
+                _db.SaveChanges();
+                return Json(new { success = true, customerType = customerType });
+            }
+
+            return Json(new { success = false, message = "Customer type is required" });
+        }
+
+
+
+
     }
 }

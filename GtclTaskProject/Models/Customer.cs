@@ -13,7 +13,7 @@ public partial class Customer
 
     public DateTime? BusinessStart { get; set; }
 
-    public CustomerType? CustomerType { get; set; }
+    public int? CustomerType { get; set; }
 
     public string? Phone { get; set; }
 

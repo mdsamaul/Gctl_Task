@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using GtclTaskProject.Models;
 
 namespace GtclTaskProject.Models;
 
@@ -18,7 +17,9 @@ public partial class GctlinfoExamTest2025Context : DbContext
 
     public virtual DbSet<Customer> Customers { get; set; }
 
-    public virtual DbSet<DeliveryAddress>? DeliveryAddresses { get; set; }
+    public virtual DbSet<CustomerType> CustomerTypes { get; set; }
+
+    public virtual DbSet<DeliveryAddress> DeliveryAddresses { get; set; }
 
     public virtual DbSet<HrmAtdRosterScheduleEntry> HrmAtdRosterScheduleEntries { get; set; }
 
@@ -39,6 +40,18 @@ public partial class GctlinfoExamTest2025Context : DbContext
             entity.Property(e => e.CreditLimit).HasColumnType("decimal(18, 2)");
         });
 
+        modelBuilder.Entity<CustomerType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_CustomerId");
+
+            entity.ToTable("CustomerType");
+
+            entity.Property(e => e.CustomerType1)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("CustomerType");
+        });
+
         modelBuilder.Entity<DeliveryAddress>(entity =>
         {
             entity.HasIndex(e => e.CustomerId, "IX_DeliveryAddresses_CustomerId");
@@ -48,9 +61,9 @@ public partial class GctlinfoExamTest2025Context : DbContext
 
         modelBuilder.Entity<HrmAtdRosterScheduleEntry>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("HRM_ATD_RosterScheduleEntry");
+            entity.HasKey(e => e.AiId).HasName("PK_HrmAtdRosterScheduleId");
+
+            entity.ToTable("HRM_ATD_RosterScheduleEntry");
 
             entity.Property(e => e.AiId)
                 .ValueGeneratedOnAdd()
@@ -117,18 +130,9 @@ public partial class GctlinfoExamTest2025Context : DbContext
                 .HasColumnName("EmployeeID");
             entity.Property(e => e.Name).HasMaxLength(100);
         });
-        modelBuilder.Entity<HrmEmployee>()
-           .HasKey(e => e.AiId);
 
-        modelBuilder.Entity<HrmAtdRosterScheduleEntry>(entity =>
-        {
-            entity.HasKey(e => e.AiId); // Configure AiId as primary key
-        });
         OnModelCreatingPartial(modelBuilder);
-        
     }
-   
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-public DbSet<GtclTaskProject.Models.EmployeeShiftViewModal> EmployeeShiftViewModal { get; set; } = default!;
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

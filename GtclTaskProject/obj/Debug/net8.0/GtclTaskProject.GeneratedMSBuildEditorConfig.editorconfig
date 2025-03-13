@@ -17,109 +17,117 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GtclTaskProject
 build_property.RootNamespace = GtclTaskProject
-build_property.ProjectDir = D:\gctl infosys\final\GtclTaskProject\GtclTaskProject\
+build_property.ProjectDir = D:\gctl infosys\update\Gctl_Task\GtclTaskProject\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\gctl infosys\final\GtclTaskProject\GtclTaskProject
+build_property.MSBuildProjectDirectory = D:\gctl infosys\update\Gctl_Task\GtclTaskProject
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/CustomerInformation/Details.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/CustomerInformation/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJJbmZvcm1hdGlvblxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/CustomerInformation/Details1.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/CustomerInformation/Details1.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJJbmZvcm1hdGlvblxEZXRhaWxzMS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/CustomerInformation/Edit.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/CustomerInformation/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJJbmZvcm1hdGlvblxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/CustomerInformation/Index.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/CustomerInformation/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJJbmZvcm1hdGlvblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/CustomerInformation/_CustomerPreview.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/CustomerInformation/_CustomerPreview.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJJbmZvcm1hdGlvblxfQ3VzdG9tZXJQcmV2aWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/CustomerInformation/_DeliveryAddresses.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/CustomerInformation/_DeliveryAddresses.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJJbmZvcm1hdGlvblxfRGVsaXZlcnlBZGRyZXNzZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Customer/Create.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Customer/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Customer/Delete.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Customer/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Customer/Details.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Customer/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Customer/Edit.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Customer/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Customer/Index.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Customer/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Customer/_addDeliveryAddress.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Customer/_addDeliveryAddress.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcX2FkZERlbGl2ZXJ5QWRkcmVzcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Employee/Delete.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Customer/_GetCustomerTypePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcX0dldEN1c3RvbWVyVHlwZVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Employee/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Employee/EmployeeShift.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Employee/EmployeeShift.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRW1wbG95ZWVTaGlmdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Employee/Index.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Employee/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Employee/_EmployeeSelectionPartial.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Employee/_EmployeeSelectionPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcX0VtcGxveWVlU2VsZWN0aW9uUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Home/Index.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Employee/_ShiftTablePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcX1NoaWZ0VGFibGVQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Home/Privacy.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Shared/Error.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/TableExport/Index.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/TableExport/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVFeHBvcnRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/_ViewImports.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/_ViewStart.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/gctl infosys/final/GtclTaskProject/GtclTaskProject/Views/Shared/_Layout.cshtml]
+[D:/gctl infosys/update/Gctl_Task/GtclTaskProject/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-1y5wr0fpl9

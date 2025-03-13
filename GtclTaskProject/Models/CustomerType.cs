@@ -1,11 +1,11 @@
-﻿namespace GtclTaskProject.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace GtclTaskProject.Models;
+
+public partial class CustomerType
 {
-    public enum CustomerType
-    {
-        Dealer,
-        Retailer,
-        Corporate,
-        Online,
-        Export
-    }
+    public int Id { get; set; }
+
+    public string? CustomerType1 { get; set; }
 }
