@@ -1,0 +1,290 @@
+﻿@model IEnumerable<GctlInfoSysTask.Models.Customer>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div id="form-container">
+    @Html.Partial("_CustomerForm", new GctlInfoSysTask.ModelDto.CustomerDto())
+</div>
+
+<div class="mt-2">
+    <span class="text-danger alert-danger deleteMassage d-none"></span>
+    <span class="text-success alert-success successMassage d-none"></span>
+</div>
+
+<table id="customerTable" class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <td><input type="checkbox" id="selectAll" /></td>
+            <th>@Html.DisplayNameFor(model => model.CustomerId)</th>
+            <th>@Html.DisplayNameFor(model => model.CustomerName)</th>
+            <th>@Html.DisplayNameFor(model => model.Address)</th>
+            <th>@Html.DisplayNameFor(model => model.BusinessStart)</th>
+            <th>@Html.DisplayNameFor(model => model.CustomerType)</th>
+            <th>@Html.DisplayNameFor(model => model.Phone)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.CreditLimit)</th>
+            <th>@Html.DisplayNameFor(model => model.Photo)</th>
+            @* <th>Actions</th> *@
+        </tr>
+    </thead>
+    <tbody id="customerTableBody">
+        @* এখানে Ajax দিয়ে টেবিল লোড হবে *@
+        @Html.Partial("_CustomerTablePartial")
+    </tbody>
+</table>
+@* <div>
+    <button type="button" id="downloadSelectedPdf">Download select pdf</button>
+</div> *@
+ @* <button id="deleteSelected" class="btn btn-danger mt-2">Delete Selected</button> *@
+
+@section Scripts {
+    <script>
+
+
+         // $("#downloadSelectedPdf").click(function(){
+         //    console.log("click");
+         //  var selectIds = [];
+         //      $(".selectCheckBox:checked").each(function(){
+         //  selectIds.push($(this).val());
+         //  });
+         //  if(selectIds.length ===0){
+         //      $(".deleteMassage").text("at last select one customer").show().delay(3000).fadeOut('slow');
+         //      return;
+         //  }
+
+         //  $.ajax({
+         //      url:"/Customer/DownloadSelectedPdf",
+         //      type:"POST",
+         //      traditional:true,
+         //      data:{ids:selectIds},
+         //      xhrFields:{
+         //          responseType:'blob'
+         //      },
+         //      success:function(blob){
+         //      var link = document.createElement('a');
+         //      link.href = window.URL.createObjectURL(blob);
+         //      link.download='SelectedCustomer.pdf';
+         //      link.click();
+         //      },
+         //      error:function(){
+         //          $(".deleteMassage").text("Error generating PDF.").show().delay(3000).fadeOut('slow');
+         //      }
+         //  });
+
+
+
+
+
+        // function loadCustomerTable() {
+        //     $.ajax({
+        //         url: "/Customer/GetCustomerTable",
+        //         type: "GET",
+        //         success: function (res) {
+        //             $("#customerTableBody").html(res);
+        //         },
+        //         error: function () {
+        //             alert("Error loading customer table.");
+        //         }
+        //     });
+        // }
+        function loadCustomerTable() {
+            $.ajax({
+                url: "/Customer/GetCustomerTable",
+                type: "GET",
+                success: function (res) {
+                    if ($.fn.DataTable.isDataTable("#customerTable")) {
+                        $('#customerTable').DataTable().destroy();
+                    }
+
+                    $("#customerTableBody").html(res);
+
+                    $("#customerTable").DataTable({
+                        "pageLength": 5,
+                        "lengthMenu": [5, 10, 15, 20],
+                        "ordering": true,
+                        "info": true,
+                        "searching": true,
+                        "autoWidth": false
+                    });
+                }
+            });
+        }
+
+       
+        $(document).ready(function () {
+            // loadCustomerTable();
+
+            // Select All Checkbox
+            $("#selectAll").click(function () {
+                $(".selectCheckBox").prop('checked', this.checked);
+                $("#deleteBtn").toggle();
+                $("#deleteSelected").toggle();
+            });
+
+            $(document).on('change', ".selectCheckBox", function(){
+                var totalSelect = $('.selectCheckBox').length;
+                var checkCheckbox = $(".selectCheckBox:checked").length;
+                // console.log(checkCheckbox);
+                if (checkCheckbox > 0) {
+                    $("#deleteSelected").show();
+                    $("#deleteBtn").hide();
+                }else{
+                    $("#deleteSelected").hide();
+                    $("#deleteBtn").show();
+                }
+                if (totalSelect === checkCheckbox) {
+                  $("#selectAll").prop('checked', true)
+              }else{
+                  $("#selectAll").prop('checked', false);
+              }
+            })
+            // Delete Selected Customers
+            $("#deleteSelected").click(function () {
+                var selectedIds = $(".selectCheckBox:checked").map(function () {
+                    return $(this).val();
+                }).get();
+
+                if (selectedIds.length === 0) {
+                    $(".deleteMassage").removeClass("d-none").text("Please select at least one customer.").delay(3000).fadeOut();
+                    return;
+                }
+
+                $.ajax({
+                    url: '/Customer/deleteCustomerSelected',
+                    type: 'POST',
+                    data: { ids: selectedIds },
+                    success: function (res) {
+                        console.log("click", res);
+                        if (res.success) {
+                            loadCustomerTable();
+                            $("#selectAll").prop('checked', false);
+                            $(".successMassage").removeClass("d-none").text("Selected customers deleted successfully!").delay(3000).fadeOut();
+                        } else {
+                            $(".deleteMassage").removeClass("d-none").text("Something went wrong.").delay(3000).fadeOut();
+                        }
+                    },
+                    error: function () {
+                        $(".deleteMassage").removeClass("d-none").text("Error occurred while deleting.").delay(3000).fadeOut();
+                    }
+                });
+            });
+
+            // Single Delete Button
+            $(document).on('click', '.delete-button', function () {
+                var id = $(this).data('id');
+                var row = $(this).closest('tr');
+
+                if (!confirm("Are you sure to delete this customer?")) return;
+
+                $.ajax({
+                    url: '/Customer/Delete/' + id,
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.success) {
+                            row.remove();
+                            $(".successMassage").removeClass("d-none").text('Customer deleted successfully!').delay(3000).fadeOut();
+                        } else {
+                            $(".deleteMassage").removeClass("d-none").text("Failed to delete.").delay(3000).fadeOut();
+                        }
+                    },
+                    error: function () {
+                        $(".deleteMassage").removeClass("d-none").text("Error occurred while deleting.").delay(3000).fadeOut();
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function(){
+            $("#downloadSelectedPdf").click(function(){
+            console.log("click");
+          var selectIds = [];
+              $(".selectCheckBox:checked").each(function(){
+          selectIds.push($(this).val());
+          });
+          if(selectIds.length === 0){
+              $(".deleteMassage").text("at last select one customer").show().delay(3000).fadeOut('slow');
+              return;
+          }
+
+          $.ajax({
+              url:"/Customer/DownloadSelectedPdf",
+              type:"POST",
+              traditional:true,
+              data:{ids:selectIds},
+              xhrFields:{
+                  responseType:'blob'
+              },
+              success:function(blob){
+              var link = document.createElement('a');
+              link.href = window.URL.createObjectURL(blob);
+              link.download='SelectedCustomer.pdf';
+              link.click();
+              },
+              error:function(){
+                  $(".deleteMassage").text("Error generating PDF.").show().delay(3000).fadeOut('slow');
+              }
+          });
+        });
+         });
+        // $(document).ready(function () {
+        //     // Initialize DataTable with custom settings
+        //     $("#customerTable").DataTable({
+        //         "pageLength": 5, // Set the initial number of records per page
+        //         "lengthMenu": [5, 10, 15, 20], // Allow users to select how many records to display per page
+        //         "ordering": true, // Enable sorting on columns
+        //         "info": true, // Display table information (e.g., "Showing 1 to 5 of 50 entries")
+        //         "searching": true, // Enable search box to search across all columns
+        //         "autoWidth": false // Disable automatic column width calculation
+        //     });
+        // });
+
+
+    </script>
+}
+@section Styles {
+
+<style>
+    #customerTable {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+        #customerTable th, #customerTable td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px;
+        }
+
+        #customerTable th {
+            font-size: 14px;
+        }
+
+        #customerTable td {
+            font-size: 13px;
+        }
+
+        #customerTable tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        #customerTable td a {
+            margin: 0 5px;
+            color: #007bff;
+        }
+
+            #customerTable td a:hover {
+                color: #0056b3;
+                text-decoration: underline;
+            }
+
+    .deleteMassage,
+    .successMassage {
+        display: block;
+        margin-top: 10px;
+        padding: 10px;
+    }
+</style>
+
+}

@@ -1,0 +1,95 @@
+﻿<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td><input type="checkbox" class="selectCheckBox" value="@item.AI_ID" /></td>
+            <td>@item.CustomerName</td>
+            <td>@item.Address</td>
+            <td>@item.BusinessStart?.ToString("yyyy-MM-dd")</td>
+            <td>@item.CustomerType?.CustomerTypeName</td>
+            <td>@item.Phone</td>
+            <td>@item.Email</td>
+            <td>@item.CreditLimit</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-outline-primary preview-btn"
+                        data-id="@item.AI_ID" data-bs-toggle="modal"
+                        data-bs-target="#previewModal">
+                    <i class="fas fa-eye"></i> Preview
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary"
+                        data-bs-toggle="modal" data-bs-target="#addressModal-@item.CustomerId">
+                    See Addresses
+                </button>
+
+                <div class="modal fade" id="addressModal-@item.CustomerId" tabindex="-1" aria-labelledby="addressModalLabel-@item.CustomerId" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addressModalLabel-@item.CustomerId">Delivery Addresses for @item.CustomerName</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Delivery Address ID</th>
+                                            <th>Address Line</th>
+                                            <th>Contact Person</th>
+                                            <th>Phone</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var address in item.DeliveryAddresses)
+                                        {
+                                            <tr>
+                                                <td>@address.DeliveryAddressId</td>
+                                                <td>@address.DeliveryAddressLine</td>
+                                                <td>@address.ContactPerson</td>
+                                                <td>@address.Phone</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+</tbody>
+<!-- Customer Preview Modal -->
+@* <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div id="previewContent">
+            <!-- Content will be loaded here -->
+        </div>
+    </div>
+</div> *@
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    // Preview functionality
+          $(document).ready(function(){
+               $('.preview-btn').click(function() {
+               var customerId = $(this).data('id');
+               $('#previewContent').html('<div class="text-center p-5"><i class="fas fa-spinner fa-spin fa-2x"></i><p class="mt-2">Loading...</p></div>');
+               console.log({customerId});
+               $.ajax({
+                   url: '@Url.Action("PreviewCustomer", "CustomerInformation")/' + customerId,
+                   type: 'GET',
+                   success: function(result) {
+                       console.log(result);
+                       $('#previewContent').html(result);
+                   },
+                   error: function() {
+                       $('#previewContent').html('<div class="modal-content"><div class="modal-body"><div class="alert alert-danger">Failed to load customer data. Please try again.</div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div></div>');
+                   }
+               });
+           });
+          })
+</script>

@@ -1,0 +1,198 @@
+﻿@model GctlInfoSysTask.ModelDto.HrmAtdRosterScheduleEntry
+<!-- Loader -->
+<style>
+    thead th {
+        position: sticky;
+        top: 0; /* আগে ছিল 100px */
+        background-color: #f8f9fa;
+        z-index: 20;
+    }
+
+</style>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}@if (TempData["deleteSuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["deleteSuccessMessage"]
+    </div>
+}
+
+<form asp-action="AssignShift" method="post">
+    <div class="container-fluid my-5">
+        <div class="row">
+            <!-- Shift Form -->
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Assign Shift</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label>From Date</label>
+                            <input type="date" asp-for="FromDate" class="form-control" placeholder="dd/mm/yyyy" required /> 
+
+                            </div>
+                            <div class="col">
+                                <label>To Date</label>
+                                <input type="date" asp-for="ToDate" class="form-control" placeholder="dd/mm/yyyy" required/>
+                            </div>
+                            <div class="col">
+                                <label asp-for="ShiftCode">Shift</label>
+                                <select asp-for="ShiftCode" class="form-select" required>
+                                    <option value="" disabled selected>Select Shift</option>
+                                    <option value="1">Morning</option>
+                                    <option value="2">Evening</option>
+                                    <option value="3">Night</option>
+                                </select>
+                            </div>
+                        </div>                       
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="col-8">
+                                <input type="text" asp-for="Remarks" class="form-control" placeholder="ReMarks"  />
+                            </div>
+                            <div class="col-4 d-flex justify-content-center gap-2">
+                                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                @* <button type="button" class="btn btn-danger btn-sm">Delete</button> *@
+                                <button type="submit" class="btn btn-danger btn-sm" formaction="/RosterSchedule/DeleteShift" formmethod="post">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employee List -->
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Employees</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (ViewBag.ErrorMessage != null)
+                        {
+                            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+                        }
+                        <div id="loader" style="display: flex; justify-content: center; align-items: center; height: 150px;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <table id="employeeTable" class="table table-sm table-bordered display nowrap w-100" style="display:none;">
+                            <thead class="table-light">
+                                <tr>
+                                    <th><input type="checkbox" id="selectAll1" /></th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAll" /></th>
+                                    <th>EmpID</th>
+                                    <th>Name</th>
+                                </tr>
+                                @foreach (var emp in Model.hRM_Employees)
+                                {
+                                    <tr>
+                                        <td><input type="checkbox" name="SelectedEmployeeId" value="@emp.EmployeeID" class="row-checkbox" /></td>
+                                        <td>@emp.EmployeeID</td>
+                                        <td>@emp.Name</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+    @await Html.PartialAsync("_RosterEntityView")
+</div>
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+                $(document).ready(function () {
+                    $(".alert").show().delay(5000).fadeOut('slow');
+            setTimeout(function () {
+                $('#employeeTable').DataTable({
+                    "scrollY": "550px",
+                    "scrollCollapse": true,
+                    "paging": false,
+                    "info": true,
+                    "searching": true,
+                    "autoWidth": false
+
+                });
+
+                $('#loader').hide();
+                $('#employeeTable').fadeIn();
+
+                // select all checkbox
+                $('#selectAll').on('click', function () {
+                    $('.row-checkbox').prop('checked', this.checked);
+                });
+                 $('.row-checkbox').on('change', function () {
+                if (!this.checked) {
+                    $('#selectAll').prop('checked', false);
+                } else if ($('.row-checkbox:checked').length === $('.row-checkbox').length) {
+                    $('#selectAll').prop('checked', true);
+                }
+            });
+            }, 1000);
+        });
+
+        // $(document).ready(function() {
+        // //      $('#employeeTable').DataTable({
+        // //     "paging": false,           
+        // //     "info": true,           
+        // //     "searching": true,        
+        // //     "scrollY": "400px",       
+        // //     "scrollCollapse": true     
+        // // });
+        //  setTimeout(function () {
+        //     $('#employeeTable').DataTable({
+        //         "paging": false,
+        //         "info": true,
+        //         "searching": true,
+        //         "scrollY": "400px",
+        //         "scrollCollapse": true
+        //     });
+
+        //     // Loader hide, table show
+        //     $('#loader').hide();
+        //     $('#employeeTable').fadeIn();
+        //     $
+
+        // }, 1000);
+        //     $('#selectAll').on('click', function () {
+        //         $('.row-checkbox').prop('checked', this.checked);
+        //     });
+
+        //     $('.row-checkbox').on('change', function () {
+        //         if (!this.checked) {
+        //             $('#selectAll').prop('checked', false);
+        //         } else if ($('.row-checkbox:checked').length === $('.row-checkbox').length) {
+        //             $('#selectAll').prop('checked', true);
+        //         }
+        //     });
+        // });
+    </script>
+} 
+
+
+     

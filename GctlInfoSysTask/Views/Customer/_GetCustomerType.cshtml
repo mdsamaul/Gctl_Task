@@ -1,0 +1,230 @@
+﻿ @model List<GctlInfoSysTask.Models.CustomerType>
+
+<div class="modal fade" id="customerTypeModal" tabindex="-1" aria-labelledby="customerTypeModalLabel" aria-hidden="true"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerTypeModalLabel">Add Customer Type</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customerTypeForm">
+                    <div class="form-group d-flex gap-2 mb-2 align-items-center">
+                        <label class="control-label w-75 d-flex justify-content-end">Customer Type Id : </label>
+                        <input type="text" readonly value="@ViewBag.nextCusTypeId" class="form-control CustomerTypeId" />
+                        <input type="hidden" id="CustomerTypeId" name="CustomerTypeId" />
+                    </div>
+                    <div class="form-group d-flex gap-2 align-items-center">
+                        <label class="control-label w-75 d-flex justify-content-end">Customer Type Name : </label>
+                        <input type="text" class="form-control" id="CustomerTypeName" name="CustomerTypeName" required />
+                    </div>
+                    @*   <button type="submit" class="btn btn-success  btn-sm mt-2" id="submitBtn">Create</button>
+                    <button type="reset" class="btn btn-danger btn-sm mt-2" id="ClearBtn">Clear</button> *@
+                    <div class="btn-group border mt-2 rounded" role="group" aria-label="Submit and Clear Buttons">
+                        <button type="submit" class="btn btn-success btn-sm rounded-start" id="submitBtn">Create</button>
+                        <button class="btn btn-danger btn-sm" id="deleteSelected">Delete</button>
+                        <button type="reset" class="btn btn-sm rounded-end btn-light" id="ClearBtn">Clear</button>
+                    </div>
+
+                </form>
+
+                <div id="warningMessage" class="alert alert-warning mt-2" style="display:none;" role="alert"></div>
+
+
+                <div class="d-flex justify-content-between align-items-center my-2">
+                    <p>Search Type</p>
+                    <input type="text" class="form-control w-75" id="searchCustomerType" placeholder="Search by ID or Name..." />
+                </div>
+
+                <div style="height: 250px; overflow-y: auto;">
+                    <table class="table tableCustomerType table-bordered" width="100%">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAll" /></th>
+                                <th>Id</th>
+                                <th>Name</th>
+                                @* <th></th>   *@
+                            </tr>
+                        </thead>
+                        <tbody id="customerTypeTableBody">
+                            @foreach (var cType in Model)
+                            {
+                                <tr data-id="@cType.CustomerTypeId" data-name="@cType.CustomerTypeName">
+                                    <td>
+                                        <input type="checkbox" class="select-item" value="@cType.CustomerTypeId" />
+                                    </td>
+                                    <td>
+                                        <a class="btn-link pointer-event editCustomerType" style="cursor:pointer;">@cType.CustomerTypeId</a>
+                                    </td>
+                                    <td>@cType.CustomerTypeName</td>
+                                    @*  <td>
+                                <button class="btn btn-sm btn-primary editCustomerType">Edit</button>
+                                </td> *@
+
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+                <hr />
+                @* <div class="d-flex justify-content-around my-3 align-items-center">
+                <h6>Customer Type List</h6>
+                <button class="btn btn-danger" id="deleteSelected">Delete Selected</button>
+                </div> *@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Select All checkbox
+        $('#selectAll').on('change', function () {
+            $('.select-item').prop('checked', $(this).prop('checked'));
+        });
+        // Search functionality
+        $("#searchCustomerType").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#customerTypeTableBody tr").filter(function () {
+                $(this).toggle(
+                    $(this).text().toLowerCase().indexOf(value) > -1
+                );
+            });
+        });
+
+        // Delete selected
+        $('#deleteSelected').click(function () {
+            let selectedIds = [];
+
+            $('.select-item:checked').each(function () {
+                selectedIds.push($(this).val());
+            });
+
+            if (selectedIds.length === 0) {
+                alert("Please select at least one item to delete.");
+                return;
+            }
+
+            if (!confirm("Are you sure you want to delete the selected customer types?")) {
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("DeleteSelectedCustomerTypes", "Customer")',
+                type: 'POST',
+                traditional: true,
+                data: { ids: selectedIds },
+                success: function (response) {
+                         $('.select-item:checked').closest('tr').remove();
+                    $('#selectAll').prop('checked', false);
+                },
+                error: function () {
+                    alert("Failed to delete selected customer types.");
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+
+        // Create or Update submit
+        $(document).on("submit", "#customerTypeForm", function (e) {
+            e.preventDefault();
+
+            var customerTypeId = $("#CustomerTypeId").val();
+            var nextCusId = $(".CustomerTypeId").val();
+            var customerTypeName = $("#CustomerTypeName").val();
+
+            let url = "";
+            let method = "";
+             
+            console.log({customerTypeId});
+            console.log({nextCusId});
+
+
+            if (customerTypeId != nextCusId) {
+                // Create
+                url = '@Url.Action("AddCustomerType", "Customer")';
+                method = "POST";
+            } else {
+                // Update
+                url = '@Url.Action("UpdateCustomerType", "Customer")';
+                method = "POST";
+            }
+            // console.log(customerTypeId);
+            // console.log(url);
+            // console.log(nextCusId);
+            $.ajax({
+                url: url,
+                type: method,
+                data: {
+                    Id: customerTypeId,
+                    CustomerTypeName: customerTypeName
+                },
+                success: function (response) {
+                    if (response.success) {
+                         $("#warningMessage").hide();
+                        if (customerTypeId === "") {
+                            // New row add
+                            var newRow = `<tr data-id="${response.customerType.customerTypeId}" data-name="${response.customerType.customerType1}">
+                                    <td><input type="checkbox" class="select-item" value="${response.customerType.customerTypeId}" /></td>
+                                    <td>  <a class="btn-link pointer-event editCustomerType" style="cursor:pointer;">${response.customerType.customerTypeId}</a></td>
+                                    <td>${response.customerType.customerType1}</td>
+                                </tr>`;
+                            $("#customerTypeTableBody").prepend(newRow);
+                            // New CustomerType successfully created, now add it to the dropdown
+
+                            let newOption = new Option(response.customerType.customerType1, response.customerType.customerTypeId, true, true);
+                            $("#CustomerType").append(newOption).trigger('change');
+                            console.log("next id ", nextCusId + 1);
+                            $('.CustomerTypeId').val(parseInt(nextCusId) + 1);
+                            // $(".CustomerTypeId").val(response.customerType.customerTypeId + 1);
+
+                        } else {
+                            // Existing row update
+                             $("#warningMessage").show();
+                               $("#warningMessage").text(response.message);
+                            let row = $('tr[data-id="' + customerTypeId + '"]');
+                            row.find('td:eq(2)').text(customerTypeName);
+
+                        }
+
+                        // Clear form
+                        $("#CustomerTypeId").val('');
+                        $("#CustomerTypeName").val('');
+                        $("#warningMessage").hide();
+                    } else {
+                        $("#warningMessage").text(response.message).show();
+                    }
+                },
+                error: function () {
+                    alert("Error occurred while saving.");
+                }
+            });
+        });
+
+        // Edit button click
+        $(document).on("click", ".editCustomerType", function () {
+            var row = $(this).closest("tr");
+            var id = row.data("id");
+            var name = row.data("name");
+
+            $(".CustomerTypeId").val(id);
+            $("#submitBtn").text("Update");
+
+            $("#CustomerTypeId").val(id);
+            $("#CustomerTypeName").val(name);
+
+            $('html, body').animate({
+                scrollTop: $("#customerTypeForm").offset().top
+            }, 500);
+        });
+        $("#ClearBtn").click(function(){
+            $("#submitBtn").text("Create");
+             $("#warningMessage").hide();
+        })       
+    });
+</script>

@@ -1,0 +1,157 @@
+﻿@model List<HRM_Employee>
+
+<form asp-action="AssignShift" method="post">
+    <div class="container-fluid my-5">
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-8">
+                <!-- Shift Assignment Form -->
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Shift Assignment Form</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="fromDate" class="form-label">From Date</label>
+                                <input type="date" class="form-control" id="fromDate" name="fromDate" required />
+                            </div>
+                            <div class="col">
+                                <label for="toDate" class="form-label">To Date</label>
+                                <input type="date" class="form-control" id="toDate" name="toDate" required />
+                            </div>
+                            <div class="col">
+                                <label for="shift" class="form-label">Shift</label>
+                                <select class="form-select" id="shift" name="shift" required>
+                                    <option value="" disabled selected>Select Shift</option>
+                                    <option value="morning">Morning</option>
+                                    <option value="evening">Evening</option>
+                                    <option value="night">Night</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary me-2">Save</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Optional: Shift Schedule Table / Partial View -->
+                @* <div>
+                    samaul
+                    @await Html.PartialAsync("_RosterEntityData", "RosterSchedule")
+                </div> *@
+            </div>
+
+            <!-- Right Column - Employee List -->
+            <div class="col-md-4">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Employee List</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
+                            <table id="employeeTable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" id="selectAll" /></th>
+                                        <th>EmpID</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var e in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="selectedEmployees" value="@e.EmployeeID" class="row-checkbox" />
+                                            </td>
+                                            <td>@e.EmployeeID</td>
+                                            <td>@e.Name</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+
+    <div class="container-fluid my-4">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Roster Schedule List</h5>
+            </div>
+            <div class="card-body">
+                <div id="loader" style="display: flex; justify-content: center; align-items: center; height: 150px;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="rosterTable" class="table table-sm table-bordered display nowrap w-100" style="display:none;">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Roster Code</th>
+                                <th>Employee ID</th>
+                                <th>Date</th>
+                                <th>Shift</th>
+                                <th>Remarks</th>
+                                <th>Entry Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @*      @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.AI_ID</td>
+                                        <td>@item.RosterScheduleCode</td>
+                                        <td>@item.EmployeeID</td>
+                                        <td>@item.Date.</td>
+                                        <td>@item.ShiftCode</td>
+                                        <td>@item.Remarks</td>
+                                        <td>@item.EntryDate</td>
+                                    </tr>
+                                } *@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- DataTables and Scripts -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#employeeTable').DataTable({
+            paging: false,
+            info: false,
+            searching: true,
+            scrollY: '400px',
+            scrollCollapse: true
+        });
+
+        $('#selectAll').on('click', function () {
+            $('.row-checkbox').prop('checked', this.checked);
+        });
+
+        $('#employeeTable').on('change', '.row-checkbox', function () {
+            if (!this.checked) {
+                $('#selectAll').prop('checked', false);
+            } else if ($('.row-checkbox:checked').length === $('.row-checkbox').length) {
+                $('#selectAll').prop('checked', true);
+            }
+        });
+    });
+</script>

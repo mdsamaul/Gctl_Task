@@ -1,0 +1,137 @@
+﻿<div class="container-fluid my-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Roster Schedule List</h5>
+        </div>
+        <div class="card-body">
+         @*    <div id="loader" style="display: flex; justify-content: center; align-items: center; height: 150px;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div> *@
+
+            <div class="table-responsive">
+                <table id="rosterTable" class="table table-sm table-bordered display nowrap w-100">
+                    <thead class="table-light">
+                        <tr>
+                            @* <th>ID</th> *@
+                            <th>Id</th>
+                            <th>Employee Id</th>
+                            <th>Name</th>
+                            <th>Designation</th>
+                            <th>Date</th>
+                            <th>Shift</th>
+                            <th>Remarks</th>
+                            <th>Day</th>
+                            <th>Entry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*      @foreach (var item in Model)
+                             {
+                                 <tr>
+                                     <td>@item.AI_ID</td>
+                                     <td>@item.RosterScheduleCode</td>
+                                     <td>@item.EmployeeID</td>
+                                     <td>@item.Date.</td>
+                                     <td>@item.ShiftCode</td>
+                                     <td>@item.Remarks</td>
+                                     <td>@item.EntryDate</td>
+                                 </tr>
+                             } *@
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#rosterTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "ajax": {
+                "url": "@Url.Action("GetData", "RosterSchedule")",
+                "type": "POST",
+                "datatype": "json",
+                "error": function (xhr, error, thrown) {
+                    console.log('DataTables error: ' + error + ' ' + thrown);
+                    alert('There was an error while fetching data. Please try again later.');
+                }
+            },
+            // "columns": [
+            //     // { "data": "AI_ID", "width": "10%" },
+            //     { "data": "rosterScheduleCode", "width": "15%" },
+            //     { "data": "employeeID", "width": "10%" },
+            //     { "data": "date", "width": "15%" },
+            //     { "data": "shiftCode", "width": "10%" },
+            //     // { "data": "remarks", "width": "25%" },
+            //     { "data": "entryDate", "width": "15%" }
+            // ],
+                  "columns": [
+        { "data": "rosterScheduleCode", "title": "Roster Code" },
+       
+       
+        { "data": "employeeID", "title": "EmployeeID" },
+        { "data": "employeeName", "title": "Employee" },
+        { "data": "designationName", "title": "Designation" },
+        {
+            "data": "date",
+            "title": "Date",
+            "render": function (data) {
+                var date = new Date(data);
+                var day = String(date.getDate()).padStart(2, '0');
+                var month = String(date.getMonth() + 1).padStart(2, '0');
+                var year = date.getFullYear();
+                return day + "/" + month + "/" + year;
+            }
+        }, {
+    "data": "remarks",
+    "title": "Remarks",
+    "render": function (data, type, row) {
+      return data ? data : "";
+    } },
+     { "data": "dayName", "title": "DayName" },
+        { "data": "shiftName", "title": "Shift" },
+        {
+            "data": "entryDate",
+            "title": "Entry Date",
+            "render": function (data) {
+                var date = new Date(data);
+                var day = String(date.getDate()).padStart(2, '0');
+                var month = String(date.getMonth() + 1).padStart(2, '0');
+                var year = date.getFullYear();
+                return day + "/" + month + "/" + year;
+            }
+        }
+    ],
+
+            "language": {
+                // "processing": "<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>",
+                    "processing": true,
+    "language": {
+        "processing": "<div class='d-flex justify-content-center align-items-center' style='height: 100px;'><div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div></div>",
+    },
+
+                "emptyTable": "No log records found",
+                "zeroRecords": "No matching records found",
+                "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                "infoEmpty": "Showing 0 to 0 of 0 entries",
+                "infoFiltered": "(filtered from _MAX_ total entries)"
+            },
+            "order": [[3, "desc"]], // Order by Date
+            "pageLength": 15,
+            "lengthMenu": [[10, 15, 25, 50, 100, 250], [10,15, 25, 50, 100, 250]],
+            "dom": '<"top"lf>rt<"bottom"ip><"clear">'
+        });
+    });
+</script>

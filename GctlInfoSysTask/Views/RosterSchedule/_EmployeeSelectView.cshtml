@@ -1,0 +1,117 @@
+﻿@model List<GctlInfoSysTask.Models.HRM_Employee>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<div class="container-fluid">
+    <div class="row mb-3 mt-3">
+        <div class="col-12">
+            <h2>Employee</h2>
+            <p class="text-muted">Viewing data from SQL view: Employee</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5>Employee</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style="height: 400px; overflow-y: auto;">
+                <table id="employeeTable" class="table table-striped table-bordered" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAll" /></th>
+                            <th>EmployeeID</th>
+                            <th>Name</th>
+                            <th>DesignationCode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var e in Model)
+                        {
+                            <tr>
+                                <td><input type="checkbox" class="row-checkbox" /></td>
+                                <td>@e.EmployeeID</td>
+                                <td>@e.Name</td>
+                                <td>@e.DesignationCode</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#employeeTable').DataTable({
+            paging: false,
+            info: true,
+            searching: true,
+            scrollY: '300px',
+            scrollCollapse: true
+        });
+
+        $('#selectAll').on('click', function () {
+            $('.row-checkbox').prop('checked', this.checked);
+        });
+
+        $('#employeeTable').on('change', '.row-checkbox', function () {
+            if (!this.checked) {
+                $('#selectAll').prop('checked', false);
+            } else {
+                if ($('.row-checkbox:checked').length === $('.row-checkbox').length) {
+                    $('#selectAll').prop('checked', true);
+                }
+            }
+        });
+    });
+</script>
+
+
+@* @section Scripts{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+<script>
+    $(document).ready(function(){
+        console.log("click");
+            $("#employeeTable").DataTable({
+                "processing":true,
+                "serverSide":true,
+                "responsiv":true, 
+                "ajax":{
+                        "url":"@Url.Action("LoadEmployee", "RosterSchedule")",
+                    "type":"POST",
+                    "datatype":"json",
+                    "error":function(xhr,error, thrown){
+                    console.log("Database error : ", +error+' '+ thrown);
+                    alert('There was an error while fetching data. please try again later');
+                    
+                    }
+                },
+                "columns":[                       
+                        {"data":"EmployeeID","width":"20%"},
+                        {"data":"Name","width":"50%"},
+                        {"data":"DesignationCode","width":"30%"},
+                ],
+                "language":{
+                        "processing": "<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>",
+                        "emptyTable": "No log records found",
+                        "zeroRecords": "No matching records found",
+                        "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                        "infoEmpty": "Showing 0 to 0 of 0 entries",
+                        "infoFiltered": "(filtered from _MAX_ total entries)"
+                },
+                "order":[[2,"desc"]],
+                "pageLength":25,
+                "lengthMenu":[[10,20]],
+                "dom":'<"top"lf>rt<"buttom"ip><"clear">'
+            });
+    });
+</script>
+} 
+*@

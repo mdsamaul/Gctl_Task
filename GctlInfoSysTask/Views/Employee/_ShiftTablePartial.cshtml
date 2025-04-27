@@ -1,0 +1,41 @@
+﻿@model GctlInfoSysTask.Models.EmployeeShiftViewModel
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Employee ID</th>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Remarks</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.HrmAtdRosterScheduleEntry != null && Model.HrmAtdRosterScheduleEntry.Any())
+        {
+            foreach (var entry in Model.HrmAtdRosterScheduleEntry)
+            {
+                <tr>
+                    <td>@entry.AI_ID</td>
+                    <td>@entry.EmployeeID</td>
+                    <td>@entry.Date</td>
+                    <td>@(entry.ShiftCode == 1 ? "Morning" : entry.ShiftCode == 2 ? "Evening" : "Night")</td>
+                    <td>@entry.Remarks</td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-primary edit-shift" data-id="@entry.AI_ID">Edit</button>
+                            <button type="button" class="btn btn-sm btn-danger delete-shift" data-id="@entry.AI_ID">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">No shifts found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

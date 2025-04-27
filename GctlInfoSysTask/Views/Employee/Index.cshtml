@@ -1,0 +1,62 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Employee List";
+}
+
+<h2>Employee List</h2>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+}
+
+<div class="container">
+    <form asp-action="Delete" method="post">
+        <table id="productTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="selectAllOnPage" />
+                    </th>
+                    <th>Emp.ID</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employee in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="selectedIds" value="@employee.AI_ID" />
+                        </td>
+                        <td>@employee.EmployeeID</td>
+                        <td>@employee.Name</td>
+                        <td>@employee.DesignationCode</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-danger">Delete Selected</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+      <script>
+         $(document).ready(function () {
+             var table = $('#productTable').DataTable();
+
+             // Select All on Page functionality
+             $('#selectAllOnPage').on('click', function () {
+                 var rows = table.rows({ 'page': 'current' }).nodes();
+                 $('input[type="checkbox"]', rows).prop('checked', this.checked);
+             });
+         });
+     </script>
+    
+
+} 

@@ -1,0 +1,737 @@
+﻿@model GctlInfoSysTask.ModelDto.CustomerDto
+@{
+    var formAction = ViewData["FormAction"] as string;
+}
+<div>
+    <div class="row" style="position: relative;">
+        <div class="col-md-12">
+            <div>
+                @* <span asp-validation-for="CustomerName" class="text-danger"></span> *@
+            </div>
+            <form asp-action="@ViewData["FormAction"]" method="post" enctype="multipart/form-data">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div></div>
+                    <div class="validation-summary-errors text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="col-md-6 text-center">                      
+
+                        <span asp-validation-for="CustomerName" class="text-white"></span>
+                        <span asp-validation-for="Address" class="text-white"></span>
+                     @*  @if (ViewData.ModelState["ExistsCustomer"] != null)
+                        {
+                            <span class="text-white">
+                                @ViewData.ModelState["ExistsCustomer"].Errors.FirstOrDefault()?.ErrorMessage
+                            </span>
+                        }  *@                    
+                        @Html.ValidationMessage("ExistsCustomer", new { @class = "text-white ExistsCustomer" })
+
+                        @* @if (ViewData.ModelState["ExistsCustomer"] != null)
+                        {
+                            <span class="text-white">                              
+                                @ViewData.ModelState["ExistsCustomer"].Errors.FirstOrDefault()?.ErrorMessage
+                            </span>
+                        }  *@
+                        <span class="successMassage">                    
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <span class="alert alert-success w-75 ">
+                                <i class="bi bi-check-circle"></i> @TempData["SuccessMessage"]
+                            </span>
+                        }
+                        </span>
+                    </div>
+                    <div class="form-group col-md-6 py-2 gap-1 d-flex justify-content-around">
+                        <div class="btn-group mt-2 rounded border" role="group" aria-label="Create, delete and Clear Button">
+                            <input type="submit" value="@(ViewData["FormAction"]?.ToString() == "Create" ? "Save" : "Edit")" class="btn btn-primary btn-sm" />
+                           @*  @if (@ViewData["FormAction"].ToString() == "Create" || @ViewData["FormAction"].ToString() == "Edit")
+                            {
+                                <button type="button" value="Delete" class="btn btn-danger btn-sm " data-id="@Model.AI_ID" id="deleteBtn">Delete</button>
+                            } *@
+                           
+                                <button type="button" value="Delete" class="btn btn-danger btn-sm " data-id="@Model.AI_ID" id="deleteBtn">Delete</button>
+                                <button type="button" id="deleteSelected" style="display:none;" class="btn btn-danger">Delete</button>
+                            @* <button type="button" id="downloadSelectedPdf" class="btn btn-dark">Download select pdf</button> *@
+                            
+                            <input type="reset" value="Clear" class="btn btn-light btn-sm" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div asp-validation-summary="All" class="text-danger mb-3 invisible" style="height:10px;"></div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group d-flex gap-2 align-items-center">
+                                    <label asp-for="CustomerId" class="control-label w-50 d-flex justify-content-end"></label>
+                                    <input asp-for="CustomerId" class="form-control" readonly value="@(Model.CustomerId ?? ViewBag.CustomerId)" />
+                                    <input asp-for="AI_ID" type="hidden" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group d-flex gap-2 align-items-center">
+                                    <label asp-for="CustomerName" class="control-label w-50 d-flex justify-content-end">
+                                        Customer Name
+                                        <span class="text-danger pb-2 pt-0 px-1">*</span>
+                                    </label>
+                                    <input asp-for="CustomerName" class="form-control" autofocus id="CustomerName" />
+                                </div>
+                                <div class="text-center">
+                                    @* <span asp-validation-for="CustomerName" class="text-danger"></span> *@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="my-2 invisible">
+                                <input type="text" name="name" value="" />
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group d-flex gap-2 align-items-start">
+                                    <label asp-for="Address" class="control-label w-50 d-flex justify-content-end">Address <span class="text-danger pb-2 pt-0 px-1">*</span></label>
+                                    <textarea asp-for="Address" class="form-control" rows="2" id="Address" autofocus></textarea>
+                                </div>
+                                <div class="text-center">
+                                    @* <span asp-validation-for="Address" class="text-danger"></span> *@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group d-flex gap-2 align-items-center">
+                                    <label asp-for="BusinessStart" class="control-label w-50 d-flex justify-content-end"></label>
+                                    <input asp-for="BusinessStart" class="form-control" type="date" />
+                                    <span asp-validation-for="BusinessStart" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="form-group flex-grow-1 gap-2 align-items-start">
+                                        <div class="d-flex align-items-center">
+                                            <label asp-for="CustomerTypeId" class="control-label w-50 d-flex justify-content-end pe-2"></label>
+                                            <select asp-for="CustomerTypeId" class="form-control w-75" asp-items="ViewBag.CustomerType" id="CustomerType">
+                                                <option value="">-- Select Customer Type --</option>
+                                            </select>
+                                        </div>
+                                        <div class="text-center">
+                                            <span asp-validation-for="CustomerTypeId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center">
+                                        <button type="button" class="btn d-flex align-items-center justify-content-center rounded-circle shadow"
+                                        style="width: 40px; height: 40px;" id="showCustomerTypeModal">
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-3"></div>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <div class="d-flex gap-2 my-2 align-items-center">
+                                        <label asp-for="Phone" class="control-label w-50 d-flex justify-content-end"></label>
+                                        @* <input asp-for="Phone" class="form-control @(ViewData.ModelState["Phone"]?.Errors.Count > 0 ? "is-invalid" : "")" /> *@
+                                        <input asp-for="Phone" class="form-control" />
+
+                                    </div>
+                                    <div class="w-100 text-center">
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <div class="d-flex gap-2 mb-2 align-items-center">
+                                        <label asp-for="Email" class="control-label w-50 d-flex justify-content-end"></label>
+                                        <input asp-for="Email" class="form-control" />
+                                    </div>
+                                    <div class="w-100 text-center">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group d-flex gap-2 align-items-center my-2">
+                                    <label asp-for="PhotoFile" class="control-label w-50 d-flex justify-content-end"></label>
+                                    <input type="file" asp-for="PhotoFile" id="photoFileInput" class="form-control" accept="image/*" />
+                                    <span asp-validation-for="PhotoFile" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="my-3"></div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <div class="d-flex gap-2 my-2 align-items-center">
+                                        <label asp-for="CreditLimit" class="control-label w-50 d-flex justify-content-end"></label>
+                                        <input asp-for="CreditLimit" class="form-control" />
+                                    </div>
+                                    <div class="w-100 text-center">
+                                        <span asp-validation-for="CreditLimit" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* <div class="col-2">
+                        <div class="mt-3 text-center d-flex justify-content-center"
+                        style="position: absolute; top: 0; right: 0; z-index: 10; @(string.IsNullOrEmpty(Model.Photo) ? "display:none;" : "")" id="imagePreview">
+                            <div class="card" style="width: 150px; height: 200px; object-fit: cover;">
+                                <div class="card-body p-2 text-center" id="imgPreviewSection">
+                                    <img id="previewImage" src="@(string.IsNullOrEmpty(Model.Photo) ? "/Images/photo.jpg" : $"/Images/{Model.Photo}")" alt="Preview"
+                                    class="preview-image mb-2 border"
+                                    style="width: 150px; height: 140px; object-fit: cover;" />
+                                    <div>
+                                        <button type="button" id="removeImageBtn" class="btn btn-sm border">
+                                            <i class="bi bi-x-circle"></i> Clear
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> *@
+                    <div class="col-2">
+                        <div class="mt-3 text-center d-flex justify-content-center"
+                             style="position: absolute; top: 0; right: 0; z-index: 10; "
+                            >
+                            <div class="card p-1" style="width: 150px; height: 200px;">
+                                <div class="card-body p-1 d-flex flex-column align-items-center justify-content-between" id="imgPreviewSection"
+                                     style="height: 100%;">
+                                    <img id="previewImage"
+                                         src="@(string.IsNullOrEmpty(Model.Photo) ? "/Images/photo.jpg" : $"/Images/{Model.Photo}")"
+                                         alt="Preview"
+                                         class="preview-image border"
+                                         style="width: 100%; height: 140px; object-fit: cover;" />
+                                    <button type="button" id="removeImageBtn" class="btn btn-sm border mt-2">
+                                        <i class="bi bi-x-circle"></i> Clear
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="my-2">
+                    <div>
+                        <h4>Delivery Address</h4>
+                        <div class="my-2">
+                            <span class="errorMassage text-danger"></span>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Delivery Address</th>
+                                    <th>Contact Person</th>
+                                    <th>Phone</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                           @*  <tbody id="deliveryAddressContainer" class="con">
+                                @if (Model.DeliveryAddresses != null && Model.DeliveryAddresses.Any())
+                                {
+                                    int i = 0;
+                                    @foreach(var dAddress in Model.DeliveryAddresses){
+                                        <tr class="rc">
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="DeliveryAddresses[@i].DeliveryAddressLine" value="@dAddress.DeliveryAddressLine" class="form-control" />
+                                                    <input type="hidden" name="DeliveryAddresses[@i].DeliveryAddressId" value="@dAddress.DeliveryAddressId" />
+                                                 
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="DeliveryAddresses[@i].ContactPerson" value="@dAddress.ContactPerson" class="form-control" />
+                                                  
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="DeliveryAddresses[@i].Phone" value="@dAddress.Phone" class="form-control" />
+                                                    <span class="text-danger" data-valmsg-for="@dAddress.Phone"></span>
+                                                </div>
+                                            </td>
+                                            <td>                                             
+                                                <button type="button" class="btn btn-primary addmore">Add More</button>
+                                                <button type="button" class="btn btn-danger remove">Remove</button>                                               
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }                                   
+                                }
+                                else
+                                {
+                                    <tr class="rc">
+                                        <td>
+                                            <input name="DeliveryAddresses[0].DeliveryAddressLine" class="form-control" />
+                                            <span class="text-danger" data-valmsg-for="DeliveryAddresses[0].DeliveryAddressLine"></span>
+                                        </td>
+                                        <td>
+                                            <input name="DeliveryAddresses[0].ContactPerson" class="form-control" />
+                                            <span class="text-danger" data-valmsg-for="DeliveryAddresses[0].ContactPerson"></span>
+                                        </td>
+                                        <td>
+                                            <input name="DeliveryAddresses[0].Phone" class="form-control" />
+                                            <span class="text-danger" data-valmsg-for="DeliveryAddresses[0].Phone"></span>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary addmore">Add More</button>
+                                            <button type="button" class="btn btn-danger remove">Remove</button>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody> *@
+                            <tbody id="deliveryAddressContainer" class="con">
+                                @if (Model.DeliveryAddresses != null && Model.DeliveryAddresses.Any())
+                                {
+                                    int i = 0;
+                                    foreach (var dAddress in Model.DeliveryAddresses)
+                                    {
+                                        <tr class="rc">
+                                            <td>
+                                                <input name="DeliveryAddresses[@i].DeliveryAddressLine" value="@dAddress.DeliveryAddressLine" class="form-control" />
+                                                <input type="hidden" name="DeliveryAddresses[@i].DeliveryAddressId" value="@dAddress.DeliveryAddressId" />
+                                            </td>
+                                            <td>
+                                                <input name="DeliveryAddresses[@i].ContactPerson" value="@dAddress.ContactPerson" class="form-control" />
+                                            </td>
+                                            <td>
+                                                <input name="DeliveryAddresses[@i].Phone" value="@dAddress.Phone" class="form-control dAPhone" />
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary addmore">Add More</button>
+                                                <button type="button" class="btn btn-danger remove">Remove</button>
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                                else
+                                {
+                                    <tr class="rc">
+                                        <td>
+                                            <input name="DeliveryAddresses[0].DeliveryAddressLine" class="form-control" />
+                                        </td>
+                                        <td>
+                                            <input name="DeliveryAddresses[0].ContactPerson" class="form-control" />
+                                        </td>
+                                        <td>
+                                            <input name="DeliveryAddresses[0].Phone" class="form-control dAPhone" />
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary addmore">Add More</button>
+                                            <button type="button" class="btn btn-danger remove">Remove</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+
+            </form>
+           @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+        </div>
+    </div>
+</div>
+
+ <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+@* <script>
+    var deliveryAddresses = @Json.Serialize(Model.DeliveryAddresses);
+    console.log({deliveryAddresses});
+</script> *@
+<script>
+
+    $(document).ready(function(){
+        $(document).on('input', '.dAPhone', function(){
+            var phone = $(this).val();
+       if(isNaN(phone) || phone.length != 11){
+           console.log(phone);
+           $(".errorMassage").text("Enter a valid Number").show();
+                }else{
+           $(".errorMassage").hide();
+                }
+                if(phone.length ==0){
+                $(".errorMassage").hide();
+                }
+          
+        })
+    })
+
+    $(document).ready(function(){
+       
+
+           
+         $("#photoFileInput").change(function (e) {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#previewImage").attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    })
+
+    $(document).ready(function(){
+            $("#removeImageBtn").click(()=>{
+                console.log("click");
+                       $("#previewImage").attr('src', "/Images/photo.jpg");
+            })
+    });
+
+
+    $(document).ready(function () {
+    //           $(".successMassage").fadeIn('slow');
+    //         setTimeout(function(){
+    //     $(".successMassage").fadeOut('slow');
+    //         $('successMassage').hide();
+    // }, 5000);
+           $('.successMassage').show().delay(2000).fadeOut('slow');
+            $('.ExistsCustomer').show().delay(2000).fadeOut('slow');
+
+
+
+    //         function recheckAddMoreButton() {
+    //     // সব "Add More" বাটন hide করো
+    //     $('.addmore').hide();
+
+    //     // প্রথম row এর "Add More" দেখাও
+    //     $('#deliveryAddressContainer tr:first .addmore').show();
+    // }
+
+    
+        
+
+
+    // $(document).on('click', '.remove', function () {
+    //     $(this).closest('tr').remove();
+    //     recheckAddMoreButton();
+    // });
+
+    // $(document).on('click', '.addmore', function () {
+    //     let rowCount = $('#deliveryAddressContainer tr').length;
+    //     let newRow = `<tr class="rc">
+    //         <td><input name="DeliveryAddresses[${rowCount}].DeliveryAddressLine" class="form-control"/></td>
+    //         <td><input name="DeliveryAddresses[${rowCount}].ContactPerson" class="form-control"/></td>
+    //         <td><input name="DeliveryAddresses[${rowCount}].Phone" class="form-control"/></td>
+    //         <td>
+    //             <button type="button" class="btn btn-primary addmore">Add More</button>
+    //             <button type="button" class="btn btn-danger remove">Remove</button>
+    //         </td>
+    //     </tr>`;
+
+    //     $('#deliveryAddressContainer').append(newRow);
+    //     recheckAddMoreButton();
+    // });
+
+    // // পেজ লোডের পর initial setup
+    // $(document).ready(function () {
+    //     recheckAddMoreButton();
+    // });
+
+        // function recheckAddMoreButton() {
+        //     // সব Add More বাটন hide করো
+        //     $('.addmore').hide();
+
+        //     // প্রথম .rc row এর Add More বাটন দেখাও
+        //     $('#deliveryAddressContainer .rc:first .addmore').show();
+        // }
+
+        // function updateRowIndexes() {
+        //     $('#deliveryAddressContainer .rc').each(function (index) {
+        //         $(this).find('input').each(function () {
+        //             let name = $(this).attr('name');
+        //             if (name) {
+        //                 let updatedName = name.replace(/\[\d+\]/, `[${index}]`);
+        //                 $(this).attr('name', updatedName);
+        //             }
+        //         });
+        //     });
+        // }
+
+        // $(document).on('click', '.remove', function () {
+        //     $(this).closest('tr').remove();
+        //     updateRowIndexes();
+        //     recheckAddMoreButton();
+        // });
+
+        // $(document).on('click', '.addmore', function () {
+        //     let rowCount = $('#deliveryAddressContainer .rc').length;
+        //     let newRow = `<tr class="rc">
+        //         <td><input name="DeliveryAddresses[${rowCount}].DeliveryAddressLine" class="form-control"/></td>
+        //         <td><input name="DeliveryAddresses[${rowCount}].ContactPerson" class="form-control"/></td>
+        //         <td><input name="DeliveryAddresses[${rowCount}].Phone" class="form-control"/></td>
+        //         <td>
+        //             <button type="button" class="btn btn-primary addmore">Add More</button>
+        //             <button type="button" class="btn btn-danger remove">Remove</button>
+        //         </td>
+        //     </tr>`;
+
+        //     $('#deliveryAddressContainer').append(newRow);
+        //     updateRowIndexes();
+        //     recheckAddMoreButton();
+        // });
+
+        // $(document).ready(function () {
+        //     updateRowIndexes();
+        //     recheckAddMoreButton();
+        // });
+
+        function recheckAddMoreButton() {
+            $('.addmore').hide();
+            $('#deliveryAddressContainer .rc:first .addmore').show();
+        }
+
+        function updateRowIndexes() {
+            $('#deliveryAddressContainer .rc').each(function (index) {
+                $(this).find('input').each(function () {
+                    let name = $(this).attr('name');
+                    if (name) {
+                        let updatedName = name.replace(/\[\d+\]/, `[${index}]`);
+                        $(this).attr('name', updatedName);
+                    }
+                });
+            });
+        }
+
+        function createEmptyRow(index = 0) {
+            return `<tr class="rc">
+            <td><input name="DeliveryAddresses[${index}].DeliveryAddressLine" class="form-control"/></td>
+            <td><input name="DeliveryAddresses[${index}].ContactPerson" class="form-control"/></td>
+                <td><input name="DeliveryAddresses[${index}].Phone" class="form-control dAPhone"/></td>
+            <td>
+                <button type="button" class="btn btn-primary addmore">Add More</button>
+                <button type="button" class="btn btn-danger remove">Remove</button>
+            </td>
+        </tr>`;
+        }
+
+       
+
+        $(document).on('click', '.remove', function () {
+            $(this).closest('tr').remove();
+
+            if ($('#deliveryAddressContainer .rc').length === 0) {
+                $('#deliveryAddressContainer').append(createEmptyRow());
+            }
+
+            updateRowIndexes();
+            recheckAddMoreButton();
+        });
+
+        $(document).on('click', '.addmore', function () {
+            let rowCount = $('#deliveryAddressContainer .rc').length;
+            $('#deliveryAddressContainer').append(createEmptyRow(rowCount));
+            updateRowIndexes();
+            recheckAddMoreButton();
+        });
+
+        $(document).ready(function () {
+            updateRowIndexes();
+            recheckAddMoreButton();
+        });
+
+
+
+
+        // Handle delete button for edit mode
+        $("#deleteBtn").click(function () {
+            console.log('click');
+            const id = $(this).data("id");
+            // if (confirm("Are you sure you want to delete this customer?")) {
+            //     window.location.href = `/Customer/Delete/${id}`;
+            // }
+            $.ajax({
+            url:'/Customer/Delete',
+            type:"POST",
+                data: {id:id},
+                success:function(){
+                    loadCustomerTable();
+                    console.log("seccess delete");
+                    window.location.href = "/Customer/Index";
+                    $(".successMassage").removeClass("d-none").text("Selected customers deleted successfully!").delay(3000).fadeOut();
+                }
+
+            })
+        });
+
+        // Validation script integration
+        $.validator.unobtrusive.parse("form");
+    });
+
+
+
+
+    $(document).ready(function () {
+        $("#showCustomerTypeModal").click(function () {
+            $.ajax({
+                url: '@Url.Action("GetCustomerTypePartial", "Customer")',
+                type: 'GET',
+                data: {
+                    nextCusTypeId: '@ViewBag.nextCusTypeId'
+                },
+                success: function (response) {
+                    debugger;
+                    console.log(response.customerType);
+                    if ($("#customerTypeModal").length === 0) {
+                        $("body").append(response);
+                    }
+                    $("#customerTypeModal").modal("show");
+                }
+            });
+        });
+
+        const inputs = document.querySelectorAll('input:not([type="submit"]):not([type="reset"]), textarea, select');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    const nextIndex = findNextFocusableIndex(inputs, index);
+                    if (nextIndex !== -1) {
+                        inputs[nextIndex].focus();
+                    }
+                }
+            });
+        });
+        function findNextFocusableIndex(elements, currentIndex) {
+            for (let i = currentIndex + 1; i < elements.length; i++) {
+                const element = elements[i];
+                if (!element.disabled && !element.readOnly &&
+                    element.type !== 'hidden' &&
+                    getComputedStyle(element).display !== 'none' &&
+                    getComputedStyle(element).visibility !== 'hidden') {
+                    return i;
+                }
+            }
+            return -1;
+        }      
+
+    });
+
+   
+
+   
+        // $(document).ready(function () {
+        // var firstInvalidField = $(".input-validation-error").first();
+        // $("input").on("input", function () {
+        //     $(".alert-danger").fadeOut();
+        // });
+
+        // console.log({firstInvalidField});
+        // var errorIcon = '<i class="fas fa-exclamation-circle"></i>';
+        // // var errorMessage = "Invalid input!";
+
+        // // $('.field-validation-error').html(errorIcon);
+
+        // if(firstInvalidField.length>0){
+        //     firstInvalidField.focus();
+        // }
+        //     $(".input-validation-error").each(function () {
+        //         $(this).on("input", function () {
+        //             // Border color remove
+        //             $(this).removeClass("input-validation-error");
+        //             // Associated error message hide
+        //             var name = $(this).attr("name");
+        //             console.log({name});
+        //             $("span[data-valmsg-for='" + name + "']").text("");
+        //         });
+        //     });
+        // });
+
+ 
+//         $(document).ready(function () {
+//     var firstInvalidField = $(".input-validation-error").first();
+
+//     $("input").on("input", function () {
+//         $(".alert-danger").fadeOut();
+//     });
+
+//     console.log({ firstInvalidField });
+
+//     var errorIcon = '<i class="fas fa-exclamation-circle"></i> ';
+
+//     // Field validation error text er sathe icon add kora
+//     $(".field-validation-error").each(function () {
+//         var currentErrorText = $(this).text().trim(); // Existing error message
+//         $(this).html(errorIcon + currentErrorText);   // Icon + Text
+//     });
+
+//     if (firstInvalidField.length > 0) {
+//         firstInvalidField.focus();
+//     }
+
+//     $(".input-validation-error").each(function () {
+//         $(this).on("input", function () {
+//             // Border color remove
+//             $(this).removeClass("input-validation-error");
+
+//             // Associated error message hide
+//             var name = $(this).attr("name");
+//             console.log({ name });
+//             $("span[data-valmsg-for='" + name + "']").text("");
+//         });
+//     });
+// });
+
+
+    $(document).ready(function () {
+        var firstInvalidField = $(".input-validation-error").first();
+
+        $("input").on("input", function () {
+            $(".alert-danger").fadeOut();
+        });
+
+        var errorIcon = ' <i class="bi bi-x-circle" style="color: yellow;"></i> ';
+        // var errorIcon = '<i class="fas fa-exclamation-circle error-icon-style"></i> ';
+
+        // Field validation error text er sathe icon add & style class add
+        $(".field-validation-error").each(function () {
+            var currentErrorText = $(this).text().trim();
+            $(this).html(errorIcon + currentErrorText);
+            $(this).addClass("custom-error-message");
+        });
+
+        // Invalid input field-er border color change
+        $(".input-validation-error").each(function () {
+            $(this).addClass("custom-error-border");
+
+            $(this).on("input", function () {
+                $(this).removeClass("input-validation-error custom-error-border");
+                var name = $(this).attr("name");
+                $("span[data-valmsg-for='" + name + "']")
+                    .removeClass("custom-error-message")
+                    .text("");
+            });
+        });
+
+        if (firstInvalidField.length > 0) {
+            firstInvalidField.focus();
+        }
+    });
+
+
+
+</script>

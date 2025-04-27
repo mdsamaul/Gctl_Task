@@ -1,0 +1,114 @@
+﻿@model IEnumerable<GctlInfoSysTask.ModelDto.HrmAtdRosterScheduleEntry>
+
+@{
+    ViewData["Title"] = "Roster Schedule List";
+}
+
+<div class="container-fluid my-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Roster Schedule List</h5>
+        </div>
+        <div class="card-body">
+            <div id="loader" style="display: flex; justify-content: center; align-items: center; height: 150px;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table id="rosterTable" class="table table-sm table-bordered display nowrap w-100" style="display:none;">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Roster Code</th>
+                            <th>Employee ID</th>
+                            <th>Date</th>
+                            <th>Shift</th>
+                            <th>Remarks</th>
+                            <th>Entry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.AI_ID</td>
+                                <td>@item.RosterScheduleCode</td>
+                                <td>@item.EmployeeID</td>
+                                <td>@item.Date.</td>
+                                <td>@item.ShiftCode</td>
+                                <td>@item.Remarks</td>
+                                <td>@item.EntryDate</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                var table = $('#rosterTable').DataTable({
+                    "scrollY": "550px",
+                    "scrollCollapse": true,
+                    "paging": true,
+                    "pageLength": 25,
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "info": true,
+                    "searching": true,
+                    "ordering": true,
+                    "autoWidth": false,
+                    "fixedHeader": true
+                });
+
+                // Reapply fixed header on resize
+                $(window).on('resize', function () {
+                    table.columns.adjust().draw();
+                });
+
+                $('#loader').hide();
+                $('#rosterTable').fadeIn();
+            }, 1000);
+        });
+    </script>
+
+    <style>
+        /* Fixed header styles */
+        .dataTables_scrollHead {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 30 !important;
+        }
+
+            .dataTables_scrollHead thead th {
+                position: sticky !important;
+                top: 0 !important;
+                background-color: #f8f9fa !important;
+                z-index: 30 !important;
+                border-bottom: 2px solid #dee2e6 !important;
+            }
+
+            /* Adding some shadow for better visibility */
+            .dataTables_scrollHead:after {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: -5px;
+                height: 5px;
+                background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent);
+                pointer-events: none;
+            }
+    </style>
+}

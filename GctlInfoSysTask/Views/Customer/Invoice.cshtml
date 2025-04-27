@@ -1,0 +1,780 @@
+﻿ @model List<GctlInfoSysTask.ModelDto.CustomerDto>
+<style>
+    #customerTable th, #customerTable td {
+        vertical-align: middle;
+    }
+
+    .table-responsive {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+</style>
+<div class="container my-4">
+   @*  <button class="btn btn-danger my-3" id="downloadPdf">Download PDF</button>
+    <button class="btn btn-danger my-3" id="downloadPerpagePdf">Formate Admit PDF</button>
+    <button id="downloadExcel" class="btn btn-success">
+        <i class="fas fa-file-excel"></i> Export to Excel
+    </button>
+    <button id="downloadWord" class="btn btn-primary">
+        <i class="fas fa-file-word"></i> Export to Word
+    </button> *@
+@* <div class="d-flex gap-3">
+        <div class="dropdown my-3">
+            <button class="btn btn-light dropdown-toggle" type="button" id="downloadDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Download Format
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="downloadDropdown">
+                <li><a class="dropdown-item" href="#" data-format="pdf">Download PDF</a></li>
+                <li><a class="dropdown-item" href="#" data-format="perpagepdf">Format Admit PDF</a></li>
+                <li><a class="dropdown-item" href="#" data-format="excel">Export to Excel</a></li>
+                <li><a class="dropdown-item" href="#" data-format="word">Export to Word</a></li>
+            </ul>
+        </div>
+
+        <button id="downloadSelected" class="btn btn-light btn-sm">
+            <i class="fas fa-download"></i> Download
+        </button>
+</div> *@
+
+    <div class="d-flex align-items-center gap-3 my-3">
+        <div class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="downloadDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                📂 Select Format
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="downloadDropdown">
+                <li><a class="dropdown-item" href="#" data-format="pdf">Download PDF</a></li>
+                <li><a class="dropdown-item" href="#" data-format="perpagepdf">Format Admit PDF</a></li>
+                <li><a class="dropdown-item" href="#" data-format="excel">Export to Excel</a></li>
+                <li><a class="dropdown-item" href="#" data-format="word">Export to Word</a></li>
+            </ul>
+        </div>
+
+        <button id="downloadSelected" class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-download me-1"></i> Download
+        </button>
+    </div>
+
+    <div class="card shadow rounded">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Customer List</h5>            
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="customerTable" class="table table-striped table-bordered align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>S/L</th>
+                            <th>Customer ID</th>
+                            <th>Customer Name</th>
+                            <th>Photo</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Customer Type</th>
+                            <th>Delivery Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      
+                        <!-- Ajax data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<!-- For Word export -->
+<script src="https://unpkg.com/docx@7.8.0/build/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+@* <script>
+    let selectedFormat = "";
+
+    // যখন dropdown থেকে কিছু select করবো
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            selectedFormat = this.getAttribute('data-format');
+            document.getElementById('downloadDropdown').innerText = this.innerText;
+        });
+    });
+
+    // Download button এ ক্লিক করলে
+    document.getElementById('downloadSelected').addEventListener('click', function () {
+        if (!selectedFormat) {
+            alert('Please select a format first!');
+            return;
+        }
+
+        if (selectedFormat === "pdf") {
+            window.location.href = "/YourController/DownloadPdf";
+        } else if (selectedFormat === "perpagepdf") {
+            window.location.href = "/YourController/DownloadPerPagePdf";
+        } else if (selectedFormat === "excel") {
+            window.location.href = "/YourController/DownloadExcel";
+        } else if (selectedFormat === "word") {
+            window.location.href = "/YourController/DownloadWord";
+        }
+    });
+</script>
+ *@
+
+
+
+
+<script>
+
+     let selectedFormat = "";
+      document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            selectedFormat = this.getAttribute('data-format');
+            document.getElementById('downloadDropdown').innerText = this.innerText;
+        });
+    });
+
+     document.getElementById('downloadSelected').addEventListener('click', function () {
+        if (!selectedFormat) {
+            alert('Please select a format first!');
+            return;
+        }
+
+        if (selectedFormat === "pdf") {
+            downloadCustomerPdf();
+          console.log("pdf");
+        } else if (selectedFormat === "perpagepdf") {
+            downloadPerpagePdf();
+           console.log("perpagepdf");
+        } else if (selectedFormat === "excel") {
+          console.log("excel");
+          downloadCustomerExcel();
+        } else if (selectedFormat === "word") {
+          console.log("word");
+          downloadCustomerWord();
+        }
+    });
+
+    $("#ImagePdf").click(function(){
+        
+        $("#ImagePdf").click(function () {
+            const images = document.getElementsByClassName("ImagePersone");
+
+            for (let i = 0; i < images.length; i++) {
+                const img = images[i];
+
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                ctx.drawImage(img, 0, 0);
+
+                const imgData = canvas.toDataURL("image/png");
+                console.log(imgData);
+
+                // Add image to the PDF
+                doc.addImage(imgData, 'PNG', 150, 10 + (i * 30), 40, 20); // Adjust y-position for each image
+            }
+        });
+
+    })
+    // Function to export customer data to Excel
+    // document.getElementById("downloadExcel").addEventListener("click", function () {
+    function downloadCustomerExcel() {
+        // Show loading indication if you want
+        // $("#loadingSpinner").show();
+
+        $.ajax({
+            url: '/Customer/GetCustomers',
+            type: "GET",
+            success: function (data) {
+                // Create a new workbook
+                const workbook = XLSX.utils.book_new();
+
+                // Prepare data for Excel
+                const excelData = [];
+
+                // Add header row
+                excelData.push([
+                    'S/L',
+                    'Customer ID',
+                    'Customer Name',
+                    'Phone',
+                    'Email',
+                    'Customer Type',
+                    'Delivery Addresses'
+                ]);
+
+                // Add data rows
+                data.forEach((customer, index) => {
+                    // Format delivery addresses
+                    let deliveryText = "";
+                    if (customer.deliveryAddressDtos && customer.deliveryAddressDtos.length > 0) {
+                        customer.deliveryAddressDtos.forEach((addr, idx) => {
+                            deliveryText += `${idx + 1}) ${addr.contactPerson || ''}, ${addr.deliveryAddressLine || ''}, ${addr.phone || ''}\n`;
+                        });
+                    }
+
+                    excelData.push([
+                        index + 1,
+                        customer.customerId || '',
+                        customer.customerName || '',
+                        customer.phone || '',
+                        customer.email || '',
+                        customer.customerType ? customer.customerType.customerTypeName : '',
+                        deliveryText.trim()
+                    ]);
+                });
+
+                // Create worksheet from data
+                const worksheet = XLSX.utils.aoa_to_sheet(excelData);
+
+                // Set column widths
+                const colWidths = [
+                    { wch: 5 },   // S/L
+                    { wch: 12 },  // Customer ID
+                    { wch: 25 },  // Customer Name
+                    { wch: 15 },  // Phone
+                    { wch: 25 },  // Email
+                    { wch: 15 },  // Customer Type
+                    { wch: 50 }   // Delivery Addresses
+                ];
+                worksheet['!cols'] = colWidths;
+
+                // Add worksheet to workbook
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Customer List");
+
+                // Generate Excel file and trigger download
+                XLSX.writeFile(workbook, "Customer_List.xlsx");
+
+                // Hide loading spinner if shown
+                // $("#loadingSpinner").hide();
+            },
+            error: function (err) {
+                console.log("Error loading data", err);
+                // Hide loading spinner if shown
+                // $("#loadingSpinner").hide();
+
+                // Show error message
+                alert("Failed to download Excel file. Please try again.");
+            }
+        });
+    };
+
+    // Function to export customer data to Word document
+    function downloadCustomerWord() {
+        // Show loading indication if you want
+        // $("#loadingSpinner").show();
+
+        $.ajax({
+            url: '/Customer/GetCustomers',
+            type: "GET",
+            success: function (data) {
+                // Create a new Document
+                const doc = new docx.Document({
+                    sections: [{
+                        properties: {},
+                        children: [
+                            new docx.Paragraph({
+                                text: "Customer List Report",
+                                heading: docx.HeadingLevel.HEADING_1,
+                                alignment: docx.AlignmentType.CENTER,
+                                spacing: {
+                                    after: 200
+                                }
+                            }),
+                            // Create table for customers
+                            new docx.Table({
+                                width: {
+                                    size: 100,
+                                    type: docx.WidthType.PERCENTAGE
+                                },
+                                rows: [
+                                    // Header row
+                                    new docx.TableRow({
+                                        tableHeader: true,
+                                        children: [
+                                            new docx.TableCell({
+                                                width: {
+                                                    size: 5,
+                                                    type: docx.WidthType.PERCENTAGE
+                                                },
+                                                children: [new docx.Paragraph("S/L")],
+                                                shading: {
+                                                    fill: "D3D3D3"
+                                                }
+                                            }),
+                                            new docx.TableCell({
+                                                width: {
+                                                    size: 10,
+                                                    type: docx.WidthType.PERCENTAGE
+                                                },
+                                                children: [new docx.Paragraph("Customer ID")],
+                                                shading: {
+                                                    fill: "D3D3D3"
+                                                }
+                                            }),
+                                            new docx.TableCell({
+                                                width: {
+                                                    size: 20,
+                                                    type: docx.WidthType.PERCENTAGE
+                                                },
+                                                children: [new docx.Paragraph("Customer Name ")],
+                                                shading: {
+                                                    fill: "D3D3D3"
+                                                }
+                                            }),
+                                            new docx.TableCell({
+                                                width: {
+                                                    size: 15,
+                                                    type: docx.WidthType.PERCENTAGE
+                                                },
+                                                children: [new docx.Paragraph("Phone")],
+                                                shading: {
+                                                    fill: "D3D3D3"
+                                                }
+                                            }),
+                                            new docx.TableCell({
+                                                width: {
+                                                    size: 15,
+                                                    type: docx.WidthType.PERCENTAGE
+                                                },
+                                                children: [new docx.Paragraph("Email")],
+                                                shading: {
+                                                    fill: "D3D3D3"
+                                                }
+                                            }),
+                                            new docx.TableCell({
+                                                width: {
+                                                    size: 15,
+                                                    type: docx.WidthType.PERCENTAGE
+                                                },
+                                                children: [new docx.Paragraph("Customer Type")],
+                                                shading: {
+                                                    fill: "D3D3D3"
+                                                }
+                                            }),
+                                            new docx.TableCell({
+                                                width: {
+                                                    size: 20,
+                                                    type: docx.WidthType.PERCENTAGE
+                                                },
+                                                children: [new docx.Paragraph("Delivery Addresses")],
+                                                shading: {
+                                                    fill: "D3D3D3"
+                                                }
+                                            }),
+                                        ]
+                                    }),
+                                    // Data rows - will be populated dynamically
+                                    ...data.map((customer, index) => {
+                                        // Format delivery addresses
+                                        let deliveryTexts = [];
+                                        if (customer.deliveryAddressDtos && customer.deliveryAddressDtos.length > 0) {
+                                            customer.deliveryAddressDtos.forEach((addr, idx) => {
+                                                deliveryTexts.push(
+                                                    new docx.Paragraph(`${idx + 1}) ${addr.contactPerson || ''}, ${addr.deliveryAddressLine || ''}, ${addr.phone || ''}`)
+                                                );
+                                            });
+                                        } else {
+                                            deliveryTexts.push(new docx.Paragraph("No delivery addresses"));
+                                        }
+
+                                        return new docx.TableRow({
+                                            children: [
+                                                new docx.TableCell({
+                                                    children: [new docx.Paragraph(`${index + 1}`)]
+                                                }),
+                                                new docx.TableCell({
+                                                    children: [new docx.Paragraph(customer.customerId || '')]
+                                                }),
+                                                new docx.TableCell({
+                                                    children: [new docx.Paragraph(customer.customerName || '')]
+                                                }),
+                                                new docx.TableCell({
+                                                    children: [new docx.Paragraph(customer.phone || '')]
+                                                }),
+                                                new docx.TableCell({
+                                                    children: [new docx.Paragraph(customer.email || '')]
+                                                }),
+                                                new docx.TableCell({
+                                                    children: [new docx.Paragraph(customer.customerType ? customer.customerType.customerTypeName : '')]
+                                                }),
+                                                new docx.TableCell({
+                                                    children: deliveryTexts
+                                                })
+                                            ]
+                                        });
+                                    })
+                                ]
+                            }),
+                            // Add footer
+                            new docx.Paragraph({
+                                text: "",
+                                spacing: {
+                                    before: 500
+                                }
+                            }),
+                            new docx.Paragraph({
+                                text: `Generated on: ${new Date().toLocaleDateString()}`,
+                                alignment: docx.AlignmentType.RIGHT,
+                                spacing: {
+                                    before: 200
+                                }
+                            })
+                        ]
+                    }]
+                });
+
+                // Generate Word document as a blob
+                docx.Packer.toBlob(doc).then(blob => {
+                    // Create download link
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    document.body.appendChild(a);
+                    a.style = "display: none";
+                    a.href = url;
+                    a.download = "Customer_List.docx";
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+
+                    // Hide loading spinner if shown
+                    // $("#loadingSpinner").hide();
+                });
+            },
+            error: function (err) {
+                console.log("Error loading data", err);
+                // Hide loading spinner if shown
+                // $("#loadingSpinner").hide();
+
+                // Show error message
+                alert("Failed to download Word file. Please try again.");
+            }
+        });
+    };
+
+
+     function downloadCustomerPdf () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(16);
+        doc.setTextColor(0, 0, 0);
+        doc.text("Customer List Report", 14, 15);
+
+        // First, get all customer images and convert them to data URLs
+        const images = document.getElementsByClassName("ImagePersone");
+        const imageDataUrls = [];
+
+        // Create a promise for each image conversion
+        const imagePromises = [];
+        for (let i = 0; i < images.length; i++) {
+            const promise = new Promise((resolve) => {
+                const img = images[i];
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                ctx.drawImage(img, 0, 0);
+                const imgData = canvas.toDataURL("image/png");
+                imageDataUrls[i] = imgData;
+                resolve();
+            });
+            imagePromises.push(promise);
+        }
+
+        // Once all images are converted, fetch customer data and create PDF
+        Promise.all(imagePromises).then(() => {
+            $.ajax({
+                url: '/Customer/GetCustomers',
+                type: "GET",
+                success: function (data) {
+                    // Set a consistent image size
+                    const IMAGE_WIDTH = 10;
+                    const IMAGE_HEIGHT = 10;
+
+                    // Configure autoTable with cell renderer for images
+                    doc.autoTable({
+                        startY: 20,
+                        head: [
+                            ['S/L', 'Customer ID', 'Customer Name', 'Image', 'Phone', 'Email', 'Customer Type', 'Delivery Address']
+                        ],
+                        body: data.map((customer, index) => {
+                            // Prepare Delivery Address as multiline string
+                            let deliveryText = "";
+                            if (customer.deliveryAddressDtos && customer.deliveryAddressDtos.length > 0) {
+                                customer.deliveryAddressDtos.forEach((addr, idx) => {
+                                    deliveryText += `${idx + 1}) ${addr.contactPerson || ''}, ${addr.deliveryAddressLine || ''}, ${addr.phone || ''}\n`;
+                                });
+                            }
+
+                            return [
+                                index + 1,
+                                customer.customerId || '',
+                                customer.customerName || '',
+                                { content: '', image: imageDataUrls[index] },
+                                customer.phone || '',
+                                customer.email || '',
+                                customer.customerType ? customer.customerType.customerTypeName : '',
+                                deliveryText.trim()
+                             
+                            ];
+                        }),
+                        styles: {
+                            fillColor: [255, 255, 255],
+                            textColor: [0, 0, 0],
+                            lineColor: [0, 0, 0],
+                            lineWidth: 0.5,
+                            fontSize: 10,
+                            cellPadding: 3,
+                        },
+                        headStyles: {
+                            fillColor: [255, 255, 255],
+                            textColor: [0, 0, 0],
+                            fontStyle: 'bold',
+                            lineColor: [0, 0, 0],
+                        },
+                        columnStyles: {
+                            7: { cellWidth: 30, minCellHeight: IMAGE_HEIGHT + 6 } // Set fixed width and minimum height for image column
+                        },
+                        didDrawCell: function (data) {
+                            // For image cells, draw the image
+                            if (data.column.index === 3 && data.cell.raw.image) {
+                                const img = data.cell.raw.image;
+
+                                // Center the image in the cell
+                                const x = data.cell.x + (data.cell.width - IMAGE_WIDTH) / 2;
+                                const y = data.cell.y + (data.cell.height - IMAGE_HEIGHT) / 2;
+
+                                doc.addImage(img, 'PNG', x, y, IMAGE_WIDTH, IMAGE_HEIGHT);
+                            }
+                        },
+                        theme: 'grid',
+                        margin: { left: 14, right: 14 }
+                    });
+
+                    // Save the PDF with the name 'CustomerList_WithDeliveryAddress.pdf'
+                    doc.save("CustomerList_WithDeliveryAddress.pdf");
+                },
+                error: function (err) {
+                    console.log("Error loading data", err);
+                }
+            });
+        });
+    };
+
+
+
+     function downloadPerpagePdf() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // First, get all customer images and convert them to data URLs
+        const images = document.getElementsByClassName("ImagePersone");
+        const imageDataUrls = [];
+
+        // Create a promise for each image conversion
+        const imagePromises = [];
+        for (let i = 0; i < images.length; i++) {
+            const promise = new Promise((resolve) => {
+                const img = images[i];
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                ctx.drawImage(img, 0, 0);
+                const imgData = canvas.toDataURL("image/png");
+                imageDataUrls[i] = imgData;
+                resolve();
+            });
+            imagePromises.push(promise);
+        }
+
+        // Once all images are converted, fetch customer data and create PDF
+        Promise.all(imagePromises).then(() => {
+            $.ajax({
+                url: '/Customer/GetCustomers',
+                type: "GET",
+                success: function (data) {
+                    // Create a PDF with one page per customer
+                    data.forEach((customer, index) => {
+                        // Add a new page for each customer except the first one
+                        if (index > 0) {
+                            doc.addPage();
+                        }
+
+                        // Set page title
+                        doc.setFontSize(18);
+                        doc.setFont(undefined, 'bold');
+                        doc.setTextColor(0, 0, 0);
+                        doc.text("Customer Admit Card", 105, 20, { align: 'center' });
+
+                        // Add company logo or header if needed
+                        // doc.addImage(companyLogo, 'PNG', 15, 10, 30, 30);
+
+                        // Add horizontal line
+                        doc.setLineWidth(0.5);
+                        doc.line(15, 25, 195, 25);
+
+                        // Add customer photo if available
+                        if (imageDataUrls[index]) {
+                            doc.addImage(imageDataUrls[index], 'PNG', 150, 35, 40, 40);
+
+                            // Add photo border
+                            doc.setLineWidth(0.5);
+                            doc.rect(150, 35, 40, 40);
+                        }
+
+                        // Customer details section
+                        doc.setFontSize(12);
+                        doc.setFont(undefined, 'bold');
+                        doc.text("Customer Details", 15, 40);
+
+                        doc.setFont(undefined, 'normal');
+                        doc.setFontSize(11);
+
+                        let yPos = 50;
+                        const lineHeight = 8;
+
+                        // Customer ID and Name
+                        doc.text(`Customer ID: ${customer.customerId || 'N/A'}`, 15, yPos);
+                        yPos += lineHeight;
+
+                        doc.text(`Name: ${customer.customerName || 'N/A'}`, 15, yPos);
+                        yPos += lineHeight;
+
+                        // Contact Information
+                        doc.text(`Phone: ${customer.phone || 'N/A'}`, 15, yPos);
+                        yPos += lineHeight;
+
+                        doc.text(`Email: ${customer.email || 'N/A'}`, 15, yPos);
+                        yPos += lineHeight;
+
+                        // Customer Type
+                        doc.text(`Customer Type: ${customer.customerType ? customer.customerType.customerTypeName : 'N/A'}`, 15, yPos);
+                        yPos += lineHeight * 1.5;
+
+                        // Delivery Addresses Section
+                        doc.setFont(undefined, 'bold');
+                        doc.text("Delivery Addresses", 15, yPos);
+                        yPos += lineHeight;
+
+                        doc.setFont(undefined, 'normal');
+
+                        // Add delivery addresses
+                        if (customer.deliveryAddressDtos && customer.deliveryAddressDtos.length > 0) {
+                            customer.deliveryAddressDtos.forEach((addr, idx) => {
+                                doc.text(`Address ${idx + 1}:`, 15, yPos);
+                                yPos += lineHeight;
+
+                                doc.text(`Contact Person: ${addr.contactPerson || 'N/A'}`, 25, yPos);
+                                yPos += lineHeight;
+
+                                // Handle long addresses by splitting them into multiple lines if needed
+                                if (addr.deliveryAddressLine) {
+                                    const addressLines = doc.splitTextToSize(`Address: ${addr.deliveryAddressLine}`, 160);
+                                    doc.text(addressLines, 25, yPos);
+                                    yPos += lineHeight * addressLines.length;
+                                } else {
+                                    doc.text(`Address: N/A`, 25, yPos);
+                                    yPos += lineHeight;
+                                }
+
+                                doc.text(`Phone: ${addr.phone || 'N/A'}`, 25, yPos);
+                                yPos += lineHeight * 1.5; 
+                            });
+                        } else {
+                            doc.text("No delivery addresses found.", 15, yPos);
+                            yPos += lineHeight;
+                        }
+
+                        doc.setLineWidth(0.5);
+                        doc.line(25, 260, 85, 260);
+                        doc.line(125, 260, 185, 260);
+
+                        doc.setFontSize(10);
+                        doc.text("Customer Signature", 55, 270, { align: 'center' });
+                        doc.text("Authorized Signature", 155, 270, { align: 'center' });
+
+                        doc.setFontSize(9);
+                        const today = new Date().toLocaleDateString();
+                        doc.text(`Generated on: ${today}`, 15, 285);
+                        doc.text("Page " + (index + 1) + " of " + data.length, 195, 285, { align: 'right' });
+                    });
+
+                    doc.save("Customer_Admit_Cards.pdf");
+                },
+                error: function (err) {
+                    console.log("Error loading data", err);
+                }
+            });
+        });
+    };
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '/Customer/GetCustomers',
+            type: "GET",  
+            success: function (data) {
+                let SrialNb=1;
+                let tableBody = "";
+                data.forEach(function (customer) {
+                    let deliveryAddress = "";
+                    console.log(customer);
+                    if (customer.deliveryAddressDtos && customer.deliveryAddressDtos.length > 0) {
+                        deliveryAddress += `<table class="table bordered">
+                            <thead><tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            </tr></thead><tbody>
+                        `;
+                        customer.deliveryAddressDtos.forEach(function (addr) {
+                           
+                            deliveryAddress += `
+                                      <tr>
+                            <td>${addr.contactPerson}</td>
+                            <td>${addr.deliveryAddressLine}</td>
+                            <td>${addr.phone}</td>
+                            </tr>
+                          `
+                        });
+                        
+                        deliveryAddress += `
+                            </tbody>
+                            </table>
+                        `;
+                    } else {
+                        deliveryAddress = "";
+                    }
+                    tableBody += `<tr>
+                        <td>${SrialNb}</td >
+                        <td>${customer.C}</td >
+                    <td>${customer.customerName}</td>
+                                <td>
+                                  ${customer.photo ? `<img class="ImagePersone" src="/Images/${customer.photo}" width="50" height="50"/>` : `<img src="/Images/photo.jpg" width="50" height="50"/>`}
+                                </td>
+
+                    <td>${customer.address}</td>
+                    <td>${customer.phone}</td>
+                    <td>${customer.email}</td>
+                    <td>${customer.customerType ? customer.customerType.customerTypeName : ''}</td>
+                    <td>${deliveryAddress}</td>
+                    </tr>
+                    `
+                        SrialNb++;
+                });
+                $("#customerTable tbody").html(tableBody);
+            },
+            error: function (error) {
+                console.log(error);  
+            }
+        });
+    });
+</script>
+ 

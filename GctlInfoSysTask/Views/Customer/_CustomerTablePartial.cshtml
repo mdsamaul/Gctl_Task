@@ -1,0 +1,26 @@
+﻿@model IEnumerable<GctlInfoSysTask.Models.Customer>
+
+@foreach (var customer in Model)
+{
+    <tr>
+        <td><input type="checkbox" class="selectCheckBox" value="@customer.AI_ID" /></td>
+        <td>
+            <a asp-action="Edit" asp-controller="Customer" asp-route-id="@customer.AI_ID">@customer.CustomerId</a>
+            @* <a asp-action="Edit" asp-route-id="@customer.ai"> @Html.DisplayFor(modelItem => item.CustomerId)</a> *@
+        </td>
+        <td>@customer.CustomerName</td>
+        <td>@customer.Address</td>
+        <td>@customer.BusinessStart</td>
+        <td>@customer.CustomerType?.CustomerTypeName</td>
+        <td>@customer.Phone</td>
+        <td>@customer.Email</td>
+        <td>@customer.CreditLimit</td>
+        <td>
+            @if (!string.IsNullOrEmpty(customer.Photo))
+            {
+                <img src="~/Images/@customer.Photo" alt="Photo" style="height:50px;" />
+            }
+        </td>
+        
+    </tr>
+}
